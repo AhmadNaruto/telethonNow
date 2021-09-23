@@ -7,7 +7,7 @@ from telethon.events import CallbackQuery
 from userbot import iqthon
 
 
-@iqthon.tgbot.on(CallbackQuery(data=re.compile(b"secret_(.*)")))
+@iqthon.tgbot.on(CallbackQuery(data=re.compile(b"همسه_(.*)")))
 async def on_plug_in_callback_query_handler(event):
     timestamp = int(event.pattern_match.group(1).decode("UTF-8"))
     if os.path.exists("./userbot/secrets.txt"):
@@ -20,9 +20,9 @@ async def on_plug_in_callback_query_handler(event):
                 encrypted_tcxt = message["text"]
                 reply_pop_up_alert = encrypted_tcxt
             else:
-                reply_pop_up_alert = "why were you looking at this shit go away and do your own work, idiot"
+                reply_pop_up_alert = "عـذرا هذه الهـمسة ليست مخصصة لـك"
         except KeyError:
-            reply_pop_up_alert = "This message no longer exists in iqthon server"
+            reply_pop_up_alert = "عـذرا هذه الهمسة لم تعد موجوده"
     else:
-        reply_pop_up_alert = "This message no longer exists "
+        reply_pop_up_alert = "عـذرا هذه الهمسة لم تعد موجوده"
     await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
