@@ -1,6 +1,6 @@
 from userbot import iqthon
 
-from . import *
+
 
 
 @iqthon.iq(admin_cmd(pattern="جلب الصورة"))
