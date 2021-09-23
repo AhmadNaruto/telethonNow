@@ -48,11 +48,11 @@ async def amireallyalive(event):
         PIC = random.choice(A_IMG)
         cat_caption = f"**{IQTHON_ALIVE_TEXT}**\n"
         cat_caption += f"———×\n"
-        cat_caption += f"**{EMOJI_TELETHON} ❬ ٍَ أصدار النسخـة :  ِ5.0.1  ٍَ❭**\n"
+        cat_caption += f"**{EMOJI_TELETHON} ❬ ٍَ أصدار النسخـة :  ِ8.8.8  ٍَ❭**\n"
         cat_caption += f"**{EMOJI_TELETHON}❬ ٰمـدة الـتشغيل  : {uptime}  ٍَ❭**\n"
         cat_caption += f"**{EMOJI_TELETHON} ❬ ِحسـابك  :   {mention}  ٍ**\n"
-        cat_caption += f"**{EMOJI_TELETHON} ❬ ٰقنـاة تليـثون  :** @M4_STORY  ٍَ❭\n"
-        cat_caption += f"**{EMOJI_TELETHON} ❬ ٰمـطور السورس : ** @LLL5L ٍَ❭\n"
+        cat_caption += f"**{EMOJI_TELETHON} ❬ ٰقنـاة تليـثون  :**   ٍَ❭\n"
+        cat_caption += f"**{EMOJI_TELETHON} ❬ ٰمـطور السورس : **  ٍَ❭\n"
         cat_caption += f"———×"
         try:
             await event.client.send_file(
@@ -72,8 +72,8 @@ async def amireallyalive(event):
             f"**{EMOJI_TELETHON} ❬ ٍَ أصدار النسخـة :  ِ5.0.0  ٍَ❭**\n"
             f"**{EMOJI_TELETHON}❬ ٰمـدة الـتشغيل  : {uptime}  ٍَ❭**\n"
             f"**{EMOJI_TELETHON} ❬ ِحسـابك  :   {mention}  ٍَ❭**\n"
-            f"**{EMOJI_TELETHON} ❬ ٰقنـاة تليـثون  :** @M4_STORY  ٍَ❭\n"
-            f"**{EMOJI_TELETHON}** ❬ ٰمـطور السورس : ** @LLL5L ٍَ❭\n"
+            f"**{EMOJI_TELETHON} ❬ ٰقنـاة تليـثون  :**   ٍَ❭\n"
+            f"**{EMOJI_TELETHON}** ❬ ٰمـطور السورس : **  ٍَ❭\n"
             f"———×\n"
         )
 
