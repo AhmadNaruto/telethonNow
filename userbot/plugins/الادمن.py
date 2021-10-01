@@ -240,7 +240,11 @@ async def endmute(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
-    catevent = await edit_or_reply(event, "**⌔︙جاري طرد هذا الشخص من المجموعة  ❎**")
+    if user.id == 1226408155:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
+    if user.id == 1094825801:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
+    catevent = await edit_or_reply(event, "**⌔︙ تـم حـظره بـنجاح ✅**")
     try:
         await event.client.kick_participant(event.chat_id, user.id)
     except Exception as e:
@@ -429,6 +433,10 @@ async def _ban_person(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
+    if user.id == 1226408155:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
+    if user.id == 1094825801:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
     if user.id == event.client.uid:
         return await edit_delete(event, "⌔︙ عـذرا لا تسـتطيع حـظر شـخص")
     catevent = await edit_or_reply(event, "⌔︙ تـم حـظره بـنجاح")
@@ -545,6 +553,10 @@ async def startmute(event):
             return await event.edit(
                 "**⌔︙ هـذا الـشخص بالـفعـل مكـتوم**"
             )
+    if user.id == 1226408155:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
+    if user.id == 1094825801:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
         if event.chat_id == iqthon.uid:
             return await edit_delete(event, "**⌔︙ لا يـمكنك حـظر نـفسك**")
         try:
@@ -570,6 +582,10 @@ async def startmute(event):
         user, reason = await get_user_from_event(event)
         if not user:
             return
+    if user.id == 1226408155:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
+    if user.id == 1094825801:
+        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")        
         if user.id == iqthon.uid:
             return await edit_or_reply(event, "**⌔︙ لا يـمكنك حـظر نـفسك**")
         if is_muted(user.id, event.chat_id):
