@@ -1,8 +1,5 @@
 from userbot import iqthon
 
-
-
-
 @iqthon.on(admin_cmd(pattern="جلب الصورة"))
 async def oho(event):
     if not event.is_reply:
