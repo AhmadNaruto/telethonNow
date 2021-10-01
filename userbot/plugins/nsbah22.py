@@ -35,7 +35,7 @@ async def permalink(mention):
     if not user:
         return
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
-    iqt = random.choice(iqthon)
+    iqt = random.choice(arb)
     await edit_or_reply(
         mention, f"⌯︙نسبة الانوثة لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🥵🖤"
     )
@@ -51,7 +51,7 @@ async def permalink(mention):
     if not user:
         return
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
-    iqt = random.choice(iqthon)
+    iqt = random.choice(arb)
     await edit_or_reply(
         mention, f"نسبة الغباء لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 😂💔"
     )
