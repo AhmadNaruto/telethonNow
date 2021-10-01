@@ -8,7 +8,7 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    if input_str == "م19":
+    if input_str == "م22":
         r = random.randint(0, 3)
         logger.debug(r)
         if r == 0:
