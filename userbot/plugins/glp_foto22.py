@@ -1,6 +1,6 @@
 from userbot import iqthon
 
-from . import *
+
 
 
 @iqthon.on(admin_cmd(pattern="جلب الصورة"))
@@ -14,8 +14,7 @@ async def oho(event):
         pic,
         caption=f"""
 -تـم جـلب الصـورة بنجـاح ✅
-- CH: @
-- Dev: @
+- CH: @IQTHON
   """,
     )
     await event.delete()
