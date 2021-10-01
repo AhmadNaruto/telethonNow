@@ -21,7 +21,7 @@ async def permalink(mention):
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
     iqt = random.choice(kno)
     await edit_or_reply(
-        mention, f"نـسـبتكم انـت و [{iqth}](tg://user?id={user.id}) هـي {iqt} 😔🖤"
+        mention, f"⌔︙ نـسـبتكم انـت و [{iqth}](tg://user?id={user.id}) هـي {iqt} 😔🖤"
     )
 
 
@@ -37,7 +37,7 @@ async def permalink(mention):
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
     iqt = random.choice(arb)
     await edit_or_reply(
-        mention, f"⌯︙نسبه الانوثه لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🤰"
+        mention, f"⌔︙ نسبه الانوثه لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🤰"
     )
 
 
@@ -53,7 +53,7 @@ async def permalink(mention):
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
     iqt = random.choice(arb)
     await edit_or_reply(
-        mention, f"نسبة الغباء لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 😂💔"
+        mention, f"⌔︙ نسبة الغباء لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 😂💔"
     )
 @iqthon.iq_cmd(
     pattern="نسبة الانحراف(?:\s|$)([\s\S]*)",
@@ -67,7 +67,7 @@ async def permalink(mention):
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
     iqt = random.choice(arb)
     await edit_or_reply(
-        mention, f"نسبة الانحراف لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🥵🖤"
+        mention, f"⌔︙ نسبة الانحراف لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🥵🖤"
     )
 @iqthon.iq_cmd(
     pattern="نسبة المثليه(?:\s|$)([\s\S]*)",
@@ -81,7 +81,7 @@ async def permalink(mention):
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
     iqt = random.choice(arb)
     await edit_or_reply(
-        mention, f"نسبة المثليه لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🤡 🏳️‍🌈."
+        mention, f"⌔︙ نسبة المثليه لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🤡 🏳️‍🌈."
         
     )  
  @iqthon.iq_cmd(
@@ -96,6 +96,6 @@ async def permalink(mention):
     iqth = user.first_name.replace("\u2060", "") if user.first_name else user.username
     iqt = random.choice(arb)
     await edit_or_reply(
-        mention, f"نسبة النجاح لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🤓."
+        mention, f"⌔︙ نسبة النجاح لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🤓."
         
     )     
