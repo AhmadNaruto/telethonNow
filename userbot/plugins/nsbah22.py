@@ -84,7 +84,7 @@ async def permalink(mention):
         mention, f"⌔︙ نسبة المثليه لـ [{iqth}](tg://user?id={user.id}) هـي {iqt} 🤡 🏳️‍🌈."
         
     )  
- @iqthon.iq_cmd(
+@iqthon.iq_cmd(
     pattern="نسبة النجاح(?:\s|$)([\s\S]*)",
     command=("نسبة النجاح", plugin_category),
 )
