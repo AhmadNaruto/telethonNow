@@ -8,80 +8,8 @@ plugin_category = "fun"
 
 
 @iqthon.iq_cmd(
-    pattern="^\:/$",
-    command=("\:", plugin_category),
-    info={
-        "header": "Animation command",
-        "usage": "\:",
-    },
-)
-async def kek(keks):
-    "Animation command"
-    keks = await edit_or_reply(keks, ":\\")
-    uio = ["/", "\\"]
-    for i in range(15):
-        await asyncio.sleep(0.5)
-        txt = ":" + uio[i % 2]
-        await keks.edit(txt)
-
-
-@iqthon.iq_cmd(
-    pattern="^\-_-$",
-    command=("-_-", plugin_category),
-    info={
-        "header": "Animation command",
-        "usage": "-_-",
-    },
-)
-async def lol(lel):
-    "Animation command"
-    lel = await edit_or_reply(lel, "-__-")
-    okay = "-__-"
-    for _ in range(15):
-        await asyncio.sleep(0.5)
-        okay = okay[:-1] + "_-"
-        await lel.edit(okay)
-
-
-@iqthon.iq_cmd(
-    pattern="^\;_;$",
-    command=(";_;", plugin_category),
-    info={
-        "header": "Animation command",
-        "usage": ";_;",
-    },
-)
-async def fun(e):
-    "Animation command"
-    e = await edit_or_reply(e, ";__;")
-    t = ";__;"
-    for _ in range(15):
-        await asyncio.sleep(0.5)
-        t = t[:-1] + "_;"
-        await e.edit(t)
-
-
-@iqthon.iq_cmd(
-    pattern="oof$",
-    command=("oof", plugin_category),
-    info={
-        "header": "Animation command",
-        "usage": "{tr}oof",
-    },
-)
-async def Oof(e):
-    "Animation command."
-    t = "Oof"
-    catevent = await edit_or_reply(e, t)
-    for _ in range(15):
-        await asyncio.sleep(0.5)
-        t = t[:-1] + "of"
-        await catevent.edit(t)
-
-
-@iqthon.iq_cmd(
-    pattern="type ([\s\S]*)",
-    command=("type", plugin_category),
+    pattern="كلام متحرك ([\s\S]*)",
+    command=("كلام متحرك", plugin_category),
     info={
         "header": "Type writter animation.",
         "usage": "{tr}type text",
@@ -104,22 +32,7 @@ async def typewriter(typew):
         await asyncio.sleep(sleep_time)
 
 
-@iqthon.iq_cmd(
-    pattern="repeat (\d*) ([\s\S]*)",
-    command=("repeat", plugin_category),
-    info={
-        "header": "repeats the given text with given no of times.",
-        "usage": "{tr}repeat <count> <text>",
-        "examples": "{tr}repeat 10 catuserbot",
-    },
-)
-async def _(event):
-    "To repeat the given text."
-    cat = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
-    message = cat[1]
-    count = int(cat[0])
-    repsmessage = (f"{message} ") * count
-    await edit_or_reply(event, repsmessage)
+
 
 
 @iqthon.iq_cmd(
@@ -200,7 +113,7 @@ async def meme(event):
 
 
 @iqthon.iq_cmd(
-    pattern="give",
+    pattern="مصاصه",
     command=("give", plugin_category),
     info={
         "header": "Animation command",
@@ -252,35 +165,3 @@ async def give(event):
     await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + " ")
     await asyncio.sleep(sleepValue)
     await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + lp)
-
-
-@iqthon.iq_cmd(
-    pattern="sadmin$",
-    command=("sadmin", plugin_category),
-    info={
-        "header": "Shouts Admin Animation command",
-        "usage": "{tr}sadmin",
-    },
-)
-async def _(event):
-    "Shouts Admin Animation command."
-    animation_ttl = range(13)
-    event = await edit_or_reply(event, "sadmin")
-    animation_chars = [
-        "@aaaaaaaaaaaaadddddddddddddmmmmmmmmmmmmmiiiiiiiiiiiiinnnnnnnnnnnnn",
-        "@aaaaaaaaaaaaddddddddddddmmmmmmmmmmmmiiiiiiiiiiiinnnnnnnnnnnn",
-        "@aaaaaaaaaaadddddddddddmmmmmmmmmmmiiiiiiiiiiinnnnnnnnnnn",
-        "@aaaaaaaaaaddddddddddmmmmmmmmmmiiiiiiiiiinnnnnnnnnn",
-        "@aaaaaaaaadddddddddmmmmmmmmmiiiiiiiiinnnnnnnnn",
-        "@aaaaaaaaddddddddmmmmmmmmiiiiiiiinnnnnnnn",
-        "@aaaaaaadddddddmmmmmmmiiiiiiinnnnnnn",
-        "@aaaaaaddddddmmmmmmiiiiiinnnnnn",
-        "@aaaaadddddmmmmmiiiiinnnnn",
-        "@aaaaddddmmmmiiiinnnn",
-        "@aaadddmmmiiinnn",
-        "@aaddmmiinn",
-        "@admin",
-    ]
-    for i in animation_ttl:
-        await asyncio.sleep(1)
-        await event.edit(animation_chars[i % 13])
