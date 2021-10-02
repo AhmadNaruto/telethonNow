@@ -5,15 +5,16 @@ from userbot import iqthon
 from . import StartTime, mention
 from . import get_readable_time as grt
 
-@iqthon.on(
-    iqthon_cmd(
-       pattern="مده", outgoing=True
-    )
-)
-@iqthon.on(
-    sudo_cmd(
-       pattern="مده", allow_sudo=True
-    )
+@iqthon.iq_cmd(
+    pattern="مده$",
+    command=("مده", plugin_category),
+    info={
+        "header": "مده",
+        "options": "مده",
+        "usage": [
+            "{tr}مده",
+        ],
+    },
 )
 async def tim(kon):
     timethon = await grt((time.time() - StartTime))
