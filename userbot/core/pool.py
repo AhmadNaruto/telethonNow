@@ -8,16 +8,16 @@ from motor.frameworks.asyncio import _EXECUTOR
 from .logger import logging
 
 _LOG = logging.getLogger(__name__)
-_LOG_STR = "<<<!  ||||  %s  ||||  !>>>"
+_LOG_STR = "@LLL5L"
 
 
 def submit_thread(func: Callable[[Any], Any], *args: Any, **kwargs: Any) -> Future:
-    """submit thread to thread pool"""
+    """إرسال الموضوع إلى تجمع"""
     return _EXECUTOR.submit(func, *args, **kwargs)
 
 
 def run_in_thread(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
-    """run in a thread"""
+    """تشغيل في موضوع"""
 
     @wraps(func)
     async def wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -34,8 +34,8 @@ def _get() -> ThreadPoolExecutor:
 def _stop():
     _EXECUTOR.shutdown()
     # pylint: disable=protected-access
-    _LOG.info(_LOG_STR, f"Stopped Pool : {_EXECUTOR._max_workers} Workers")
+    _LOG.info(_LOG_STR, f"توقف التجمع : {_EXECUTOR._max_workers} العمل")
 
 
 # pylint: disable=protected-access
-_LOG.info(_LOG_STR, f"Started Pool : {_EXECUTOR._max_workers} Workers")
+_LOG.info(_LOG_STR, f"توقف التجمع : {_EXECUTOR._max_workers} العمل")
