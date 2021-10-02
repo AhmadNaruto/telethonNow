@@ -10,7 +10,7 @@ from userbot import iqthon
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import get_user_from_event, reply_id
 from . import spamwatch
 
@@ -19,7 +19,7 @@ LOGS = logging.getLogger(__name__)
 
 
 async def fetch_info(replied_user, event):
-    """Get details from the User object."""
+    """iqthon"""
     replied_user_profile_photos = await event.client(
         GetUserPhotosRequest(
             user_id=replied_user.user.id, offset=42, max_id=0, limit=80
@@ -145,13 +145,13 @@ async def _(event):
     pattern="ايدي(?:\s|$)([\s\S]*)",
     command=("ايدي", plugin_category),
     info={
-        "header": "Gets info of an user.",
-        "description": "User compelete details.",
-        "usage": "{tr}whois <username/userid/reply>",
+        "header": "iqthon",
+        "description": "iqthon",
+        "usage": "{tr}iqthon",
     },
 )
 async def who(event):
-    "Gets info of an user"
+    "iqthon"
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     replied_user, reason = await get_user_from_event(event)
@@ -182,8 +182,8 @@ async def who(event):
 
 
 @iqthon.iq_cmd(
-    pattern="رابط الحساب(?:\s|$)([\s\S]*)",
-    command=("رابط الحساب", plugin_category),
+    pattern="رابطه(?:\s|$)([\s\S]*)",
+    command=("رابطه", plugin_category),
     info={
         "header": "Generates a link to the user's PM .",
         "usage": "{tr}link <username/userid/reply>",
@@ -200,8 +200,8 @@ async def permalink(mention):
     await edit_or_reply(mention, f"• ⚜️ | [{tag}](tg://user?id={user.id})")
     
 @iqthon.iq_cmd(
-    pattern="اسم الشخص(?:\s|$)([\s\S]*)",
-    command=("اسم الشخص", plugin_category),
+    pattern="اسمه(?:\s|$)([\s\S]*)",
+    command=("اسمه", plugin_category),
     info={
         "header": "iqthon",
         "usage": "{tr}iqthon",
@@ -217,4 +217,68 @@ async def permalink(mention):
     ll5 = user.first_name.replace("\u2060", "") if user.first_name else (" ")
     kno = user.last_name.replace("\u2060", "") if user.last_name else (" ")
     await edit_or_reply(mention, f"•  |  {ll5} {kno}")    
+
+@iqthon.iq_cmd(
+    pattern="صورته(?:\s|$)([\s\S]*)",
+    command=("صورته", plugin_category),
+    info={
+        "header": "iqthon",
+        "description": "iqthon",
+        "usage": [
+            "{tr}iqthon",
+            "{tr}iqthon",
+            "{tr}iqthon",
+        ],
+    },
+)
+async def potocmd(event):
+    "iqthon"
+    uid = "".join(event.raw_text.split(maxsplit=1)[1:])
+    user = await event.get_reply_message()
+    chat = event.input_chat
+    if user:
+        photos = await event.client.get_profile_photos(user.sender)
+        u = True
+    else:
+        photos = await event.client.get_profile_photos(chat)
+        u = False
+    if uid.strip() == "":
+        uid = 1
+        if int(uid) > (len(photos)):
+            return await edit_delete(
+                event, "**⌔︙ لم يتم العثور على صورة لهذا  الشخص 🏞**"
+            )
+        send_photos = await event.client.download_media(photos[uid - 1])
+        await event.client.send_file(event.chat_id, send_photos)
+    elif uid.strip() == "جميعها":
+        if len(photos) > 0:
+            await event.client.send_file(event.chat_id, photos)
+        else:
+            try:
+                if u:
+                    photo = await event.client.download_profile_photo(user.sender)
+                else:
+                    photo = await event.client.download_profile_photo(event.input_chat)
+                await event.client.send_file(event.chat_id, photo)
+            except Exception:
+                return await edit_delete(event, "**⌔︙ هذا المستخدم ليس لديه صور لتظهر لك  🙅🏼  **")
+    else:
+        try:
+            uid = int(uid)
+            if uid <= 0:
+                await edit_or_reply(
+                    event, "**⌔︙ الرقم غير صحيح - اختر رقم صوره موجود فعليا ⁉️**"
+                )
+                return
+        except BaseException:
+            await edit_or_reply(event, "**⌔︙ هناك خطا  ⁉️**")
+            return
+        if int(uid) > (len(photos)):
+            return await edit_delere(
+                event, "**⌔︙ لم يتم العثور على صورة لهذا  الشخص 🏞**"
+            )
+
+        send_photos = await event.client.download_media(photos[uid - 1])
+        await event.client.send_file(event.chat_id, send_photos)
+    await event.delete()    
     
