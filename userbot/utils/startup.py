@@ -19,7 +19,7 @@ from ..sql_helper.global_collection import (
     get_item_collectionlist,
 )
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from .pluginmanager import load_module
+from .klanr import load_module
 from .tools import create_supergroup
 
 LOGS = logging.getLogger("IQTHON")
