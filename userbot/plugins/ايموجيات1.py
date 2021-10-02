@@ -241,8 +241,8 @@ async def _(event):
     await asyncio.sleep(0.3)
     await event.edit("نار حته ابو حطب ممسويها هه 🔥🔥🔥")
     
-@bot.on(admin_cmd(pattern=r"^عصبي", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"^عصبي", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"عصبي$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"عصبي$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -286,28 +286,28 @@ async def _(event):
     animation_ttl = range(20)
     event = await edit_or_reply(event, "هاااااااااااااااااااااااا")
     animation_chars = [
-        "😁",
-        "😧",
-        "😡",
-        "😢",
-        "😁",
-        "😧",
-        "😡",
-        "😢",
+        "😁.",
+        "😧.",
+        "😡.",
+        "😢.",
+        "😁.",
+        "😧.",
+        "😡.",
+        "😢.",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 10])        
 
-@bot.on(admin_cmd(pattern=f"قرد$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"قرد$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=f"قرد بالع$", outgoing=True))
+@bot.on(sudo_cmd(pattern=f"قرد بالع$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 2
     animation_ttl = range(12)
     event = await edit_or_reply(event, "ها كواد ....")
-    animation_chars = ["🐵", "🙉", "🙈", "🙊", "🖕‎🐵🖕"]
+    animation_chars = ["🐵.", "🙉.", "🙈.", "🙊.", "🖕‎🐵🖕."]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 6])
@@ -322,19 +322,19 @@ async def _(event):
     animation_ttl = range(13)
     event = await edit_or_reply(event, "🖐️")
     animation_chars = [
-        "👈",
-        "👉",
-        "☝️",
-        "👆",
-        "🖕",
-        "👇",
-        "✌️",
-        "🤞",
-        "🖖",
-        "🤘",
-        "🤙",
-        "🖐️",
-        "👌",
+        "👈.",
+        "👉.",
+        "☝️.",
+        "👆.",
+        "🖕.",
+        "👇.",
+        "✌️.",
+        "🤞.",
+        "🖖.",
+        "🤘.",
+        "🤙.",
+        "🖐️.",
+        "👌.",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -350,18 +350,18 @@ async def _(event):
     animation_ttl = range(12)
     event = await edit_or_reply(event, "ارقام ....")
     animation_chars = [
-        "🔟",
-        "9️⃣",
-        "8️⃣",
-        "7️⃣",
-        "6️⃣",
-        "5️⃣",
-        "4️⃣",
-        "3️⃣",
-        "2️⃣",
-        "1️⃣",
-        "0️⃣",
-        "🆘",
+        "🔟.",
+        "9️⃣.",
+        "8️⃣.",
+        "7️⃣.",
+        "6️⃣.",
+        "5️⃣.",
+        "4️⃣.",
+        "3️⃣.",
+        "2️⃣.",
+        "1️⃣.",
+        "0️⃣.",
+        "🆘.",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -375,7 +375,7 @@ async def _(event):
     animation_interval = 1
     animation_ttl = range(0, 20)
     event = await edit_or_reply(event, "❤️")
-    animation_chars = ["🖤", "❤️", "🖤", "❤️", "‎"]
+    animation_chars = ["🖤.", "❤️.", "🖤.", "❤️.", "‎."]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 4])        
