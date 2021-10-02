@@ -3,7 +3,7 @@ from userbot import iqthon
 from . import ALIVE_NAME, StartTime, get_readable_time, mention, reply_id
 
 DEFULTUSER = ALIVE_NAME or "IQTHONbot"
-IQ_IMG = ALIVE_PIC or "https://telegra.ph/file/17f2ad9df0b5aeed779d1.mp4"
+IQT_IMG = "https://telegra.ph/file/17f2ad9df0b5aeed779d1.mp4"
 IQTS_TEXT = "𓆩 𝑾𝑬𝑳𝑪𝑶𝑴𝑬  :"
 IQTEM = "**⌔ :**"
 
