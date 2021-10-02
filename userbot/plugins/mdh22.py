@@ -1,5 +1,5 @@
 import time
-
+from userbot import iqthon
 from . import ALIVE_NAME, StartTime, get_readable_time, mention, reply_id
 
 DEFULTUSER = ALIVE_NAME or "LEObot"
