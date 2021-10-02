@@ -277,14 +277,19 @@ async def _(event):
         await event.edit("".join(deq))
         deq.rotate(1)   
 
-@bot.on(admin_cmd(pattern=f"مزاجي$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"مزاجي$", allow_sudo=True))
+@iqthon.iq_cmd(
+    pattern="مزاجي$",
+    command=("مزاجي", plugin_category),
+    info={
+        "الامر": "امر تسليه جربه بنفسك ",
+        "الاستخدام": "{tr}مزاجي",
+    },
+)
 async def _(event):
-    if event.fwd_from:
-        return
+    "أمر الرسوم المتحركة"
     animation_interval = 1
-    animation_ttl = range(20)
-    event = await edit_or_reply(event, "هاااااااااااااااااااااااا")
+    animation_ttl = range(14)
+    event = await edit_or_reply(event, "**خير شرايد ؟**")
     animation_chars = [
         "😁.",
         "😧.",
@@ -297,30 +302,49 @@ async def _(event):
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 10])        
+        await event.edit(animation_chars[i % 14])       
 
-@bot.on(admin_cmd(pattern=f"قرد بالع$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"قرد بالع$", allow_sudo=True))
+@iqthon.iq_cmd(
+    pattern="قرد بالع$",
+    command=("قرد بالع", plugin_category),
+    info={
+        "الامر": "امر تسليه جربه بنفسك ",
+        "الاستخدام": "{tr}قرد بالع",
+    },
+)
 async def _(event):
-    if event.fwd_from:
-        return
-    animation_interval = 2
-    animation_ttl = range(12)
-    event = await edit_or_reply(event, "ها كواد ....")
-    animation_chars = ["🐵.", "🙉.", "🙈.", "🙊.", "🖕‎🐵🖕."]
+    "أمر الرسوم المتحركة"
+    animation_interval = 1
+    animation_ttl = range(14)
+    event = await edit_or_reply(event, "**هااا كواد**")
+    animation_chars = [
+        "🐵.",
+        "🙉.",
+        "😡.",
+        "🙈.",
+        "🖕.",
+        "🐵.",
+        "🖕.",
+        "🖕‎🐵🖕.",
+    ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 6])
+        await event.edit(animation_chars[i % 14])   
 
 
-@bot.on(admin_cmd(pattern=f"اصابع$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"اصابع$", allow_sudo=True))
+@iqthon.iq_cmd(
+    pattern="اصابع$",
+    command=("اصابع", plugin_category),
+    info={
+        "الامر": "امر تسليه جربه بنفسك ",
+        "الاستخدام": "{tr}اصابع",
+    },
+)
 async def _(event):
-    if event.fwd_from:
-        return
+    "أمر الرسوم المتحركة"
     animation_interval = 1
-    animation_ttl = range(13)
-    event = await edit_or_reply(event, "🖐️")
+    animation_ttl = range(14)
+    event = await edit_or_reply(event, "**خلشوفك حركات تشك شك**")
     animation_chars = [
         "👈.",
         "👉.",
@@ -338,17 +362,22 @@ async def _(event):
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 13])
+        await event.edit(animation_chars[i % 14])
 
 
-@bot.on(admin_cmd(pattern=f"ارقام$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"ارقام$", allow_sudo=True))
+@iqthon.iq_cmd(
+    pattern="ارقام$",
+    command=("ارقام", plugin_category),
+    info={
+        "الامر": "امر تسليه جربه بنفسك ",
+        "الاستخدام": "{tr}اارقام",
+    },
+)
 async def _(event):
-    if event.fwd_from:
-        return
+    "أمر الرسوم المتحركة"
     animation_interval = 1
-    animation_ttl = range(12)
-    event = await edit_or_reply(event, "ارقام ....")
+    animation_ttl = range(14)
+    event = await edit_or_reply(event, "**ارقام ...**")
     animation_chars = [
         "🔟.",
         "9️⃣.",
@@ -365,18 +394,4 @@ async def _(event):
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 12])
-
-@bot.on(admin_cmd(pattern=f"قلبي$", outgoing=True))
-@bot.on(sudo_cmd(pattern=f"قلبي$", allow_sudo=True))
-async def _(event):
-    if event.fwd_from:
-        return
-    animation_interval = 1
-    animation_ttl = range(0, 20)
-    event = await edit_or_reply(event, "❤️")
-    animation_chars = ["🖤.", "❤️.", "🖤.", "❤️.", "‎."]
-    for i in animation_ttl:
-        await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 4])        
-        
+        await event.edit(animation_chars[i % 14])
