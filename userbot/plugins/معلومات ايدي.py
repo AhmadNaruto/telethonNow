@@ -198,3 +198,23 @@ async def permalink(mention):
         return await edit_or_reply(mention, f"• ⚜️ | [{custom}](tg://user?id={user.id})")
     tag = user.first_name.replace("\u2060", "") if user.first_name else user.username
     await edit_or_reply(mention, f"• ⚜️ | [{tag}](tg://user?id={user.id})")
+    
+@iqthon.iq_cmd(
+    pattern="اسم الشخص(?:\s|$)([\s\S]*)",
+    command=("اسم الشخص", plugin_category),
+    info={
+        "header": "iqthon",
+        "usage": "{tr}iqthon",
+    },
+)
+async def permalink(mention):
+    """iqthon"""
+    user, custom = await get_user_from_event(mention)
+    if not user:
+        return
+    if custom:
+        return await edit_or_reply(mention, f"• ⚜️ | {custom} ")
+    ll5 = user.first_name.replace("\u2060", "") if user.first_name else (" ")
+    kno = user.last_name.replace("\u2060", "") if user.last_name else (" ")
+    await edit_or_reply(mention, f"•  |  {ll5} {kno}")    
+    
