@@ -19,16 +19,16 @@ from ..sql_helper.global_collection import (
     get_item_collectionlist,
 )
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from .klanr import load_module
+from .pluginmanager import load_module
 from .tools import create_supergroup
 
-LOGS = logging.getLogger("IQTHON")
+LOGS = logging.getLogger("تليثون العرب")
 cmdhr = Config.COMMAND_HAND_LER
 
 
 async def setup_bot():
     """
-    To set up bot for userbot
+    iqthon
     """
     try:
         await iqthon.connect()
@@ -51,13 +51,13 @@ async def setup_bot():
         if Config.OWNER_ID == 0:
             Config.OWNER_ID = utils.get_peer_id(iqthon.me)
     except Exception as e:
-        LOGS.error(f"كود تيرمكس - {str(e)}")
+        LOGS.error(f"كـود تيرمكس - {str(e)}")
         sys.exit()
 
 
 async def startupmessage():
     """
-    Start up message in telegram logger group
+    iqthon
     """
     try:
         if BOTLOG:
@@ -81,12 +81,15 @@ async def startupmessage():
         if msg_details:
             await iqthon.check_testcases()
             message = await iqthon.get_messages(msg_details[0], ids=msg_details[1])
-            text = message.text + "\n\n**⌔︙ اهلا وسهلا لقد قمت باعاده تشغيل تليثون العرب تمت بنجاح**"
+            text = (
+                message.text
+                + "\n\n**⌔︙ اهلا وسهلا لقد قمت باعاده تشغيل تليثون العرب تمت بنجاح**"
+            )
             await iqthon.edit_message(msg_details[0], msg_details[1], text)
             if gvarstatus("restartupdate") is not None:
                 await iqthon.send_message(
                     msg_details[0],
-                    f"{cmdhr}البنك",
+                    f"{cmdhr}البنك :",
                     reply_to=msg_details[1],
                     schedule=timedelta(seconds=10),
                 )
@@ -96,10 +99,9 @@ async def startupmessage():
         return None
 
 
-# don't know work or not just a try in future will use sleep
 async def ipchange():
     """
-    Just to check if ip change or not
+    iqthon
     """
     newip = (requests.get("https://httpbin.org/ip").json())["origin"]
     if gvarstatus("ipaddress") is None:
@@ -118,7 +120,7 @@ async def ipchange():
 
 async def add_bot_to_logger_group(chat_id):
     """
-    To add bot to logger groups
+    iqthon
     """
     bot_details = await iqthon.tgbot.get_me()
     try:
@@ -143,7 +145,7 @@ async def add_bot_to_logger_group(chat_id):
 
 async def load_plugins(folder):
     """
-    To load plugins from the mentioned folder
+    iqthon
     """
     path = f"userbot/{folder}/*.py"
     files = glob.glob(path)
@@ -172,12 +174,14 @@ async def load_plugins(folder):
                     os.remove(Path(f"userbot/{folder}/{shortname}.py"))
             except Exception as e:
                 os.remove(Path(f"userbot/{folder}/{shortname}.py"))
-                LOGS.info(f"⌔︙ غير قادر على التحميل {shortname} يوجد هناك خطا بسبب : {e}")
+                LOGS.info(
+                    f"⌔︙غير قادر على التحميل {shortname} يوجد هناك خطا بسبب : {e}"
+                )
 
 
 async def verifyLoggerGroup():
     """
-    Will verify the both loggers group
+    iqthon
     """
     flag = False
     if BOTLOG:
@@ -186,23 +190,21 @@ async def verifyLoggerGroup():
             if not isinstance(entity, types.User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.info(
-                        "⌔︙ الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
+                        "⌔︙الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.info(
-                        "⌔︙ الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
+                        "⌔︙الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
                     )
         except ValueError:
-            LOGS.error(
-                "⌔︙ الفار لا يمكن العثور على PRIVATE_GROUP_BOT_API_ID. تأكد من صحتها."
-            )
+            LOGS.error("⌔︙تـأكد من فـار المجـموعة  PRIVATE_GROUP_BOT_API_ID.")
         except TypeError:
             LOGS.error(
-                "⌔︙ الفار لا يمكن العثور على PRIVATE_GROUP_BOT_API_ID. تأكد من صحتها."
+                "⌔︙لا يمكـن العثور على فار المجموعه PRIVATE_GROUP_BOT_API_ID. تأكد من صحتها."
             )
         except Exception as e:
             LOGS.error(
-                "⌔︙ حدث استثناء عند محاولة التحقق من PRIVATE_GROUP_BOT_API_ID.\n"
+                "⌔︙حدث استثناء عند محاولة التحقق من PRIVATE_GROUP_BOT_API_ID.\n"
                 + str(e)
             )
     else:
@@ -211,9 +213,7 @@ async def verifyLoggerGroup():
             "مجموعه بوت تليثون الخاص بك", iqthon, Config.TG_BOT_USERNAME, descript
         )
         addgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
-        print(
-            "⌔︙ تم إنشاء مجموعة خاصة لـ PRIVATE_GROUP_BOT_API_ID بنجاح وإضافتها إلى المتغيرات."
-        )
+        print("⌔︙ تم إنشاء مجموعة المسـاعدة بنجاح وإضافتها إلى المتغيرات.")
         flag = True
     if PM_LOGGER_GROUP_ID != -100:
         try:
@@ -225,17 +225,24 @@ async def verifyLoggerGroup():
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.info(
-                        "⌔︙ الأذونات مفقودة للمستخدمين الإضافيين لـ PM_LOGGER_GROUP_ID المحدد."
+                        "⌔︙الأذونات مفقودة للمستخدمين الإضافيين لـ PM_LOGGER_GROUP_ID المحدد."
                     )
         except ValueError:
-            LOGS.error("⌔︙ لا يمكن العثور على PM_LOGGER_GROUP_ID. تأكد من صحتها.")
+            LOGS.error("⌔︙ لا يمكن العثور على فار  PM_LOGGER_GROUP_ID. تأكد من صحتها.")
         except TypeError:
             LOGS.error("⌔︙ PM_LOGGER_GROUP_ID غير مدعوم. تأكد من صحتها.")
         except Exception as e:
             LOGS.error(
-                "⌔︙ حدث استثناء عند محاولة التحقق من PM_LOGGER_GROUP_ID.\n"
-                + str(e)
+                "⌔︙ حدث استثناء عند محاولة التحقق من PM_LOGGER_GROUP_ID.\n" + str(e)
             )
+    else:
+        descript = "⌔︙ وظيفه هذا المجموعة لحفض رسائل التي تكون موجة اليك ان لم تعجبك هذا المجموعة قم بحذفها نهائيأ 👍 \n  الـسورس : - @IQTHON"
+        _, groupid = await create_supergroup(
+            "كـروب تخزين الخاص", iqthon, Config.TG_BOT_USERNAME, descript
+        )
+        addgvar("PM_LOGGER_GROUP_ID", groupid)
+        print("⌔︙ تم إنشاء مجموعة خاصة لـ PRIVATE_GROUP_BOT_API_ID بنجاح وإضافتها إلى المتغيرات.")
+        flag = True
     if flag:
         executable = sys.executable.replace(" ", "\\ ")
         args = [executable, "-m", "userbot"]
