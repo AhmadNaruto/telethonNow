@@ -89,7 +89,7 @@ async def log_tagged_messages(event):
         resalt += f"\n<b>⌔︙ رسـالة جـديدة : </b><code>{messaget}</code>"
     else:
         resalt += f"\n<b>⌔︙ رسـالة جـديدة: </b>{event.message.message}"
-    resalt += f"\n<b>⌔︙ رابط الرساله : </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
+    resalt += f"\n<b>⌔︙ رابط الرساله : </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> اضغط هنا</a>"
     if not event.is_private:
         await event.client.send_message(
             Config.PM_LOGGER_GROUP_ID,
