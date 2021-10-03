@@ -60,6 +60,43 @@ async def monito_p_m_s(event):
             except Exception as e:
                 LOGS.warn(str(e))
 
+@iqthon.iq_cmd(incoming=True, func=lambda e: e.mentioned, edited=False, forword=None)
+async def log_tagged_messages(event):
+    hmm = await event.get_chat()
+    from .afk import AFK_
+
+    if gvarstatus("GRPLOG") and gvarstatus("GRPLOG") == "false":
+        return
+    if (
+        (no_log_pms_sql.is_approved(hmm.id))
+        or (Config.PM_LOGGER_GROUP_ID == -100)
+        or ("on" in AFK_.USERAFK_ON)
+        or (await event.get_sender() and (await event.get_sender()).bot)
+    ):
+        return
+    full = None
+    try:
+        full = await event.client.get_entity(event.message.from_id)
+    except Exception as e:
+        LOGS.info(str(e))
+    messaget = media_type(event)
+    resalt = f"⌔︙ المجموعه : </b><code>{hmm.title}</code>"
+    if full is not None:
+        resalt += (
+            f"\n<b>⌔︙ من : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
+        )
+    if messaget is not None:
+        resalt += f"\n<b>⌔︙ رسـالة جـديدة : </b><code>{messaget}</code>"
+    else:
+        resalt += f"\n<b>⌔︙ رسـالة جـديدة: </b>{event.message.message}"
+    resalt += f"\n<b>⌔︙ رابط الرساله : </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
+    if not event.is_private:
+        await event.client.send_message(
+            Config.PM_LOGGER_GROUP_ID,
+            resalt,
+            parse_mode="html",
+            link_preview=False,
+        )
 
 @iqthon.iq_cmd(
     pattern="تخزين الخاص (تشغيل|ايقاف)$",
