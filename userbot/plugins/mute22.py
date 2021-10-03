@@ -25,7 +25,7 @@ plugin_category = "admin"
 async def startgmute(event):
     "iqthon"
     if event.is_private:
-        await event.edit("**⌔︙ قـد تـكون هـنالك بـعض المـشاكل والأخطـاء**")
+        await event.edit("**⌔︙ جاري الكتم**")
         await asyncio.sleep(2)
         userid = event.chat_id
         reason = event.pattern_match.group(1)
@@ -33,8 +33,6 @@ async def startgmute(event):
         user, reason = await get_user_from_event(event)
         if not user:
             return
-    if user.id == 1226408155:
-        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
         if user.id == iqthon.uid:
             return await edit_or_reply(
                 event, "**⌔︙ لا يـمكنك كتم نـفسك**"
