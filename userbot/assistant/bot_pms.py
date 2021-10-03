@@ -48,14 +48,11 @@ async def check_bot_started_users(user, event):
     check = get_starter_details(user.id)
     if check is None:
         start_date = str(datetime.now().strftime("%B %d, %Y"))
-        notification = f"👤 {_format.mentionuser(user.first_name , user.id)} has started me.\
-                \n**ID: **`{user.id}`\
-                \n**Name: **{get_display_name(user)}"
+        notification = f"**▾∮ مرحبا عزيزي ↸**\n**▾ قام المستخدم ↫ ** 『{_format.mentionuser(user.first_name , user.id)}』 **بتشغيل البوت❕**\n**▾∮ الاسم ⪼** `{get_display_name(user)}`\n**▾∮الايدي ⪼ **`{user.id}`"
     else:
         start_date = check.date
-        notification = f"👤 {_format.mentionuser(user.first_name , user.id)} has restarted me.\
-                \n**ID: **`{user.id}`\
-                \n**Name: **{get_display_name(user)}"
+        notification = f"**▾∮ قام المستخدم ↫ 「{_format.mentionuser(user.first_name , user.id)}」 بإعادة تشغيل البوت❗️**\n**▾∮الاسم ⪼ **`{get_display_name(user)}`\n**▾∮الايدي ⪼ ** `{user.id}`"
+
     try:
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
     except Exception as e:
@@ -64,83 +61,8 @@ async def check_bot_started_users(user, event):
         await event.client.send_message(BOTLOG_CHATID, notification)
 
 
-@iqthon.bot_cmd(
-    pattern=f"^/start({botusername})?([\s]+)?$",
-    incoming=True,
-    func=lambda e: e.is_private,
-)
-async def bot_start(event):
-    chat = await event.get_chat()
-    user = await iqthon.get_me()
-    if check_is_black_list(chat.id):
-        return
-    reply_to = await reply_id(event)
-    mention = f"[{chat.first_name}](tg://user?id={chat.id})"
-    my_mention = f"[{user.first_name}](tg://user?id={user.id})"
-    first = chat.first_name
-    last = chat.last_name
-    fullname = f"{first} {last}" if last else first
-    username = f"@{chat.username}" if chat.username else mention
-    userid = chat.id
-    my_first = user.first_name
-    my_last = user.last_name
-    my_fullname = f"{my_first} {my_last}" if my_last else my_first
-    my_username = f"@{user.username}" if user.username else my_mention
-    if chat.id != Config.OWNER_ID:
-        customstrmsg = gvarstatus("START_TEXT") or None
-        if customstrmsg is not None:
-            start_msg = customstrmsg.format(
-                mention=mention,
-                first=first,
-                last=last,
-                fullname=fullname,
-                username=username,
-                userid=userid,
-                my_first=my_first,
-                my_last=my_last,
-                my_fullname=my_fullname,
-                my_username=my_username,
-                my_mention=my_mention,
-            )
-        else:
-            start_msg = f"**⌔︙ اهلا وسهلا اخوي  {mention} **\
-                        \n**⌔︙ {my_mention}'انا البوت المساعد .**\
-                        \n**⌔︙ يمكنك التواصل مع صاحب البوت فقط ارسل رسالتك 👤.**\
-                        \n\n**⌔︙ البوت خاص بسورس :** [TELETHON FOR ARABS](https://t.me/M4_STORY)"
-        buttons = [
-            (
-                Button.url("تنصيب سورسنا", "https://heroku.com/deploy?template=https://github.com/klanrali/Telethon-Arab-helper"),
-                Button.url(
-                    "قناه المساعد",
-                    "https://t.me/yzzzy",
-                ),
-            )
-        ]
-    else:
-        start_msg = "**⌔︙ اهلا وسهلا بك ايها المطور ⚜️**\
-            \n⌔︙ لروئيه الاوام الخاصه بالمطور أرسل : `/مساعدة`"
-        buttons = None
-    try:
-        await event.client.send_message(
-            chat.id,
-            start_msg,
-            link_preview=False,
-            buttons=buttons,
-            reply_to=reply_to,
-        )
-    except Exception as e:
-        if BOTLOG:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"**Error**\nThere was a error while user starting your bot.\
-                \n`{str(e)}`",
-            )
-    else:
-        await check_bot_started_users(chat, event)
-
-
 @iqthon.bot_cmd(incoming=True, func=lambda e: e.is_private)
-async def bot_pms(event):  # sourcery no-metrics
+async def bot_pms(event):
     chat = await event.get_chat()
     if check_is_black_list(chat.id):
         return
@@ -153,7 +75,7 @@ async def bot_pms(event):  # sourcery no-metrics
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"**Error**\nWhile storing messages details in database\n`{str(e)}`",
+                    f"**خـطأ**\nأثناء تخزين تفاصيل الرسائل في قاعدة البيانات\n`{str(e)}`",
                 )
     else:
         if event.text.startswith("/"):
@@ -177,12 +99,12 @@ async def bot_pms(event):  # sourcery no-metrics
                     )
                 else:
                     msg = await event.client.send_message(
-                        user_id, event.text, reply_to=reply_msg
+                        user_id, event.text, reply_to=reply_msg, link_preview=False
                     )
             except UserIsBlockedError:
-                return await event.reply("𝗧𝗵𝗶𝘀 𝗯𝗼𝘁 𝘄𝗮𝘀 𝗯𝗹𝗼𝗰𝗸𝗲𝗱 𝗯𝘆 𝘁𝗵𝗲 𝘂𝘀𝗲𝗿. ❌")
+                return await event.reply("هـذا البـوت تم حـظره بواسـطه المستخدم ")
             except Exception as e:
-                return await event.reply(f"**Error:**\n`{str(e)}`")
+                return await event.reply(f"**خطـأ:**\n`{str(e)}`")
             try:
                 add_user_to_db(
                     reply_to, user_name, user_id, reply_msg, event.id, msg.id
@@ -192,7 +114,7 @@ async def bot_pms(event):  # sourcery no-metrics
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"**Error**\nWhile storing messages details in database\n`{str(e)}`",
+                        f"**خـطأ**\nأثناء تخزين تفاصيل الرسائل في قاعدة البيانات\n`{str(e)}`",
                     )
 
 
@@ -213,7 +135,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
         if reply_msg:
             await event.client.send_message(
                 Config.OWNER_ID,
-                f"⬆️ **This message was edited by the user** {_format.mentionuser(get_display_name(chat) , chat.id)} as :",
+                f"▾∮ قام المستخدم ↫  「{_format.mentionuser(get_display_name(chat) , chat.id)}」 بتعديل الرسالة⇅",
                 reply_to=reply_msg,
             )
             msg = await event.forward_to(Config.OWNER_ID)
@@ -224,7 +146,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"**Error**\nWhile storing messages details in database\n`{str(e)}`",
+                        f"**خـطأ**\nأثناء تخزين تفاصيل الرسائل في قاعدة البيانات\n`{str(e)}`",
                     )
     else:
         reply_to = await reply_id(event)
@@ -282,7 +204,7 @@ async def handler(event):
                         return
                     await event.client.send_message(
                         Config.OWNER_ID,
-                        f"⬆️ **This message was deleted by the user** {_format.mentionuser(user_name , user_id)}.",
+                        f"▾∮ قام المستخدم ↫  「{_format.mentionuser(user_name , user_id)}」 بحذف الرسالة ↧",
                         reply_to=reply_msg,
                     )
             except Exception as e:
@@ -290,34 +212,28 @@ async def handler(event):
 
 
 @iqthon.bot_cmd(
-    pattern=f"^/uinfo$",
+    pattern=f"^معلومات$",
     from_users=Config.OWNER_ID,
 )
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
-        return await event.reply("Reply to a message to get message info")
+        return await event.reply("**▾∮قم بالرد ع رسالة المستخدم لجلب المعلومات!**")
     info_msg = await event.client.send_message(
         event.chat_id,
-        "`🔎 Searching for this user in my database ...`",
+        "**▾∮ سأجلب المعلومات من قاعدة بياناتي ✓",
         reply_to=reply_to,
     )
     users = get_user_id(reply_to)
     if users is None:
-        return await info_msg.edit(
-            "**ERROR:** \n`Sorry !, Can't Find this user in my database :(`"
-        )
+        return await info_msg.edit("حدث خطأ!\n**لم اعثر على المستخدم في بياناتي ✘**")
     for usr in users:
         user_id = int(usr.chat_id)
         user_name = usr.first_name
         break
     if user_id is None:
-        return await info_msg.edit(
-            "**ERROR:** \n`Sorry !, Can't Find this user in my database :(`"
-        )
-    uinfo = f"This message was sent by 👤 {_format.mentionuser(user_name , user_id)}\
-            \n**First Name:** {user_name}\
-            \n**User ID:** `{user_id}`"
+        return await info_msg.edit("حدث خطأ!\n**لم اعثر على المستخدم في بياناتي ✘**")
+    uinfo = f"**▾∮الاسم ⪼ **`{user_name}`\n**▾∮الايدي ⪼ **`{user_id}`\n**▾∮الرابط ⪼** 「{_format.mentionuser(user_name , user_id)}」"
     await info_msg.edit(uinfo)
 
 
@@ -325,9 +241,9 @@ async def send_flood_alert(user_) -> None:
     # sourcery no-metrics
     buttons = [
         (
-            Button.inline("🚫  BAN", data=f"bot_pm_ban_{user_.id}"),
+            Button.inline("حظر المستخدم ⛔️❗️", data=f"bot_pm_ban_{user_.id}"),
             Button.inline(
-                "➖ Bot Antiflood [OFF]",
+                "ايقاف تحذير التكرار ﹥[off] ⚠️",
                 data="toggle_bot-antiflood_off",
             ),
         )
@@ -350,13 +266,9 @@ async def send_flood_alert(user_) -> None:
         flood_count = FloodConfig.ALERT[user_.id]["count"] = 1
 
     flood_msg = (
-        r"⚠️ **#Flood_Warning**"
+        r"تحذير التكرار ⚠️"
         "\n\n"
-        f"  ID: `{user_.id}`\n"
-        f"  Name: {get_display_name(user_)}\n"
-        f"  👤 User: {_format.mentionuser(get_display_name(user_), user_.id)}"
-        f"\n\n**Is spamming your bot !** ->  [ Flood rate ({flood_count}) ]\n"
-        "__Quick Action__: Ignored from bot for a while."
+        f"**▾∮  المستخدم ⪼** 「{_format.mentionuser(get_display_name(user_), user_.id)}」\n**▾∮الايدي ⪼ **`{user_.id}`\n\n**▾ المستخدم قام بتكرار الرسائل! العدد ↫** `({flood_count})`\n`*عند الاهمال سيتم حظره تلقائي ❗️`\n**للاجراء السريع في الاسفل ↶**"
     )
 
     if found:
@@ -371,7 +283,7 @@ async def send_flood_alert(user_) -> None:
             else:
                 await ban_user_from_bot(
                     user_,
-                    f"Automated Ban for Flooding bot [exceeded flood rate of ({FloodConfig.AUTOBAN})]",
+                    f"▾∮ حظر تلقائي لتكرارك {FloodConfig.AUTOBAN} رسائل!",
                 )
                 FloodConfig.USERS[user_.id].clear()
                 FloodConfig.ALERT[user_.id].clear()
@@ -398,7 +310,7 @@ async def send_flood_alert(user_) -> None:
             chat = await iqthon.tgbot.get_entity(BOTLOG_CHATID)
             await iqthon.tgbot.send_message(
                 Config.OWNER_ID,
-                f"⚠️  **[Bot Flood Warning !](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                f"⚠️  **[▾∮ يوجد تكرار!\nإضغط ع الرسالة لمعرفتهُ واجراء اللازم!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             if BOTLOG:
@@ -416,9 +328,11 @@ async def bot_pm_ban_cb(c_q: CallbackQuery):
     except Exception as e:
         await c_q.answer(f"Error:\n{str(e)}")
     else:
-        await c_q.answer(f"Banning UserID -> {user_id} ...", alert=False)
-        await ban_user_from_bot(user, "Spamming Bot")
-        await c_q.edit(f"✅ **Successfully Banned**  User ID: {user_id}")
+        await c_q.answer(f"جاري حظر المستخدم ↫ `{user_id}`", alert=False)
+        await ban_user_from_bot(user, "لا يسمح بتكرار الرسائل!")
+        await c_q.edit(
+            f"▾∮ تم حظر المستخدم بسبب التكرار❗️ ↶**\n**▾∮الاسم ⪼ **`{user_name}`\n**▾∮الايدي ⪼ **`{user_id}`\n**▾∮الرابط ⪼** 「{_format.mentionuser(user_name , user_id)}**"
+        )
 
 
 def time_now() -> Union[float, int]:
@@ -453,10 +367,10 @@ def is_flood(uid: int) -> Optional[bool]:
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvarstatus("bot_antif") is None:
-        return await c_q.answer(f"Bot Antiflood was already disabled.", alert=False)
+        return await c_q.answer(f" تحذير التكرار فعلا غير مفعل ❓", alert=False)
     delgvar("bot_antif")
-    await c_q.answer(f"Bot Antiflood disabled.", alert=False)
-    await c_q.edit("BOT_ANTIFLOOD is now disabled !")
+    await c_q.answer(f" تم ايقاف تحذير التكرار ❗️", alert=False)
+    await c_q.edit("**▾∮ تحذير التكرار غير مفعل الان  ✅**")
 
 
 @iqthon.bot_cmd(incoming=True, func=lambda e: e.is_private)
