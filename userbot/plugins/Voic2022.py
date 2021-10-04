@@ -20,30 +20,6 @@ def user_list(l, n):
         yield l[i : i + n]
 
 
-@iqthon.on(admin_cmd(pattern="stopvc$",
-    outgoing=True,
-))
-async def _(e):
-    try:
-        await e.client(stopvc(await get_call(e)))
-        await eor(e, "`Voice Chat Stopped...`")
-    except Exception as ex:
-        await eor(e, f"`{str(ex)}`")
-
-
-@iqthon.on(admin_cmd(pattern="playvc$",
-))
-async def _(e):
-    zz = await eor(e, "`VC bot started...`")
-        msg = f"Failed "
-        if len(msg) > 4096:
-            with open("vc-error.txt", "w") as f:
-                f.write(msg.replace("`", ""))
-            await e.reply(file="vc-error.txt")
-            await zz.delete()
-            remove("vc-error.txt")
-            return
-        await zz.edit(msg)
 
 
 @iqthon.on(admin_cmd(
