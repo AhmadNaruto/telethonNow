@@ -1,7 +1,13 @@
-import asyncio
-from time import sleep
+from asyncio import sleep
 
+from telethon.errors import (
+    ChatAdminRequiredError,
+    FloodWaitError,
+    MessageNotModifiedError,
+    UserAdminInvalidError,
+)
 from telethon.tl import functions
+from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
     ChannelParticipantsKicked,
@@ -14,14 +20,17 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 
-from telethon.errors import ChatAdminRequiredError, UserAdminInvalidError
-from telethon.tl import functions
-from telethon.tl.functions.channels import EditBannedRequest
 from userbot import iqthon
-from . import *
 
+from ..core.logger import logging
+from ..core.managers import edit_delete, edit_or_reply
+from ..helpers import readable_time
+from . import BOTLOG, BOTLOG_CHATID
 
-BanTelethonAr = ChatBannedRights(
+LOGS = logging.getLogger(__name__)
+plugin_category = "admin"
+
+KLANR_RIGHTS = ChatBannedRights(
     until_date=None,
     view_messages=True,
     send_messages=True,
@@ -33,17 +42,39 @@ BanTelethonAr = ChatBannedRights(
     embed_links=True,
 )
 
-@iqthon.on(admin_cmd(pattern=r"تفليش ?(.*)"))
-@iqthon.on(sudo_cmd(pattern=r"تفليش ?(.*)", allow_sudo=True))
+
+async def ban_user(chat_id, i, rights):
+    try:
+        await iqthon(functions.channels.EditBannedRequest(chat_id, i, rights))
+        return True, None
+    except Exception as exc:
+        return False, str(exc)
+
+
+
+@iqthon.iq_cmd(
+    pattern="تفليش$",
+    command=("تفليش", plugin_category),
+    info={
+        "header": "iqthon.",
+        "description": "iqthon",
+        "usage": [
+            "{tr}iqthon",
+        ],
+    },
+    groups_only=True,
+    require_admin=True,
+)
 async def _(event):
+    "iqthon"
     result = await event.client(
         functions.channels.GetParticipantRequest(event.chat_id, event.client.uid)
     )
     if not result:
-        return await eod(
-            event, "انتضر هناك مشكله"
+        return await edit_or_reply(
+            event, "**⌔︙ ليس لديك صلاحيه حظر في هذا الدردشة**"
         )
-    klanr = await eor(event, "**جاري الاستعداد لتفليش مجموعتك ..**")
+    iqthonevent = await edit_or_reply(event, "**⌔︙جاري تفليش مجموعتك أنتظر قليلآ 🚮**")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -55,17 +86,10 @@ async def _(event):
         try:
             if user.id not in admins_id:
                 await event.client(
-                    EditBannedRequest(event.chat_id, user.id, BanTelethonAr)
+                    EditBannedRequest(event.chat_id, user.id, KLANR_RIGHTS)
                 )
-                success += 1
-                await asyncio.sleep(0.5)
+                success += 5
+                await sleep(0.3)  # for avoid any flood waits !!-> do not remove it
         except Exception as e:
             LOGS.info(str(e))
-            await asyncio.sleep(0.5)
-    await klanr.edit(
-        "**تفليش مجموعتك اكتمل ...**"
-    )
-    await bot.send_message(
-        Config.LOGGER_ID,
-        f"**تفليش مجموعتك اكتمل ...** :  `{success}`  عدد من اصل  `{total}`  عضو ",
-    )
+    await iqthonevent.edit(f"**⌔︙ تم بنجاح تفليش مجموعتك من {total} الاعضاء 🚮**")
