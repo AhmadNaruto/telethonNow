@@ -68,7 +68,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
     return NewMessage(**args)
 
 
-def eor(
+async def eor(
     event,
     text,
     parse_mode=None,
