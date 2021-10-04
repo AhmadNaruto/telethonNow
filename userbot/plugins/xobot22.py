@@ -11,7 +11,7 @@ IQMOG = re.compile(
     "\U0001F680-\U0001F6FF"  # transport & map symbols
     "\U0001F700-\U0001F77F"  # alchemical symbols
     "\U0001F780-\U0001F7FF"  # Geometric Shapes Extended
-    "\U0001F800-\U0001F8FF"  # Supplemental Arrows-C
+    "\U0001F800-\U0001F8FF"  # Supplemental aliosamg
     "\U0001F900-\U0001F9FF"  # Supplemental Symbols and Pictographs
     "\U0001FA00-\U0001FA6F"  # Chess Symbols
     "\U0001FA70-\U0001FAFF"  # Symbols and Pictographs Extended-A
