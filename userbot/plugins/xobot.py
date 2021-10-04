@@ -1,7 +1,7 @@
 import re
 
 from userbot import iqthon
-from userbot.utils import admin_cmd
+from ..utils import admin_cmd
 
 
 IF_EMOJI = re.compile(
