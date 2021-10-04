@@ -35,11 +35,7 @@ async def _(e):
 ))
 async def _(e):
     zz = await eor(e, "`VC bot started...`")
-    er, out = await edit_or_reply(event, "**⌔︙لـم يتـم حفـظ  ✕**")
-    LOGS.info(er)
-    LOGS.info(out)
-    if er:
-        msg = f"Failed {er}\n\n{out}"
+        msg = f"Failed "
         if len(msg) > 4096:
             with open("vc-error.txt", "w") as f:
                 f.write(msg.replace("`", ""))
