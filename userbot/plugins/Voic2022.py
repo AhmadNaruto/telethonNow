@@ -8,7 +8,7 @@ from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 
 from . import *
 from userbot import iqthon
-from ..utils.decorators import eor
+from userbot.utils import admin_cmd, sudo_cmd, eor
 async def get_call(event):
     mm = await event.client(getchat(event.chat_id))
     xx = await event.client(getvc(mm.full_chat.call))
@@ -19,6 +19,34 @@ def user_list(l, n):
     for i in range(0, len(l), n):
         yield l[i : i + n]
 
+@iqthon.on(admin_cmd(pattern="stopvc$",
+    outgoing=True,
+))
+async def _(e):
+    try:
+        await e.client(stopvc(await get_call(e)))
+        await eor(e, "`Voice Chat Stopped...`")
+    except Exception as ex:
+        await eor(e, f"`{str(ex)}`")
+
+
+@iqthon.on(admin_cmd(pattern="playvc$",
+))
+async def _(e):
+    zz = await eor(e, "`VC bot started...`")
+    er, out = await bash("python vcstarter.py & sleep 10 && npm start")
+    LOGS.info(er)
+    LOGS.info(out)
+    if er:
+        msg = f"Failed {er}\n\n{out}"
+        if len(msg) > 4096:
+            with open("vc-error.txt", "w") as f:
+                f.write(msg.replace("`", ""))
+            await e.reply(file="vc-error.txt")
+            await zz.delete()
+            remove("vc-error.txt")
+            return
+        await zz.edit(msg)
 
 
 
