@@ -89,7 +89,7 @@ async def _(event):
                     EditBannedRequest(event.chat_id, user.id, KLANR_RIGHTS)
                 )
                 success += 15
-                await sleep(0.5)  # for avoid any flood waits !!-> do not remove it
+                await sleep(0.2)  # for avoid any flood waits !!-> do not remove it
         except Exception as e:
             LOGS.info(str(e))
     await iqthonevent.edit(f"**⌔︙ تم بنجاح تفليش مجموعتك من {total} الاعضاء 🚮**")
