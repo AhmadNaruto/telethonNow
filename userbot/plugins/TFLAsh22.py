@@ -21,7 +21,7 @@ from telethon.tl.types import (
 )
 
 from userbot import iqthon
-
+from userbot.utils import admin_cmd, sudo_cmd, eor
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import readable_time
@@ -42,13 +42,6 @@ KLANR_RIGHTS = ChatBannedRights(
     embed_links=True,
 )
 
-
-async def ban_user(chat_id, i, rights):
-    try:
-        await iqthon(functions.channels.EditBannedRequest(chat_id, i, rights))
-        return True, None
-    except Exception as exc:
-        return False, str(exc)
 
 
 
