@@ -218,7 +218,7 @@ async def autoname_loop():
     AUTONAMESTART = gvarstatus("اسم وقتي") == "true"
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
-        go = requests.get(f"https://telethon.ml/DontTag.php??text={HM}").json()['newText']
+        go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
         name = f"{EMOJI_TELETHON} {go} - "
         LOGS.info(name)
         try:
@@ -234,7 +234,7 @@ async def autobio_loop():
     AUTOBIOSTART = gvarstatus("نبذه وقتيه") == "true"
     while AUTOBIOSTART:
         HM = time.strftime("%I:%M")
-        go = requests.get(f"https://telethon.ml/DontTag.php??text={HM}").json()['newText']
+        go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
         bio = f"{EMOJI_TELETHON} {DEFAULTUSERBIO}  - {go}"
         LOGS.info(bio)
         try:
