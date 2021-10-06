@@ -24,7 +24,7 @@ autopic_path = os.path.join(os.getcwd(), "userbot", "original_pic.png")
 digitalpic_path = os.path.join(os.getcwd(), "userbot", "digital_pic.png")
 autophoto_path = os.path.join(os.getcwd(), "userbot", "photo_pfp.png")
 digitalpfp = Config.DIGITAL_PIC
-klanr = Config.TM_IQTHON or ""
+klanr = Config.ALIVE_EMOJI or "•"
 
 
 async def digitalpicloop():
