@@ -76,8 +76,8 @@ def start_bot():
   except Exception as e:
     print(e)
     return False
-Catcheck = start_bot()
-if Catcheck == False:
+check = start_bot()
+if check == False:
     print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
     iqthon.loop.run_until_complete(setup_bot())               
    
