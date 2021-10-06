@@ -48,7 +48,7 @@ autophoto_path = os.path.join(os.getcwd(), "userbot", "photo_pfp.png")
 
 EMOJI_TELETHON = gvarstatus("ALIVE_EMOJI") or "•"
 
-digitalpfp = Config.DIGITAL_PIC or "https://telegra.ph/file/1bf9c1b0a084c258b1f97.jpg"
+digitalpfp = Config.DIGITAL_PIC or "https://telegra.ph/file/6b5db91f38e919e386168.jpg"
 
 COLLECTION_STRINGS = {
     "batmanpfp_strings": [
@@ -150,7 +150,7 @@ async def digitalpicloop():
         cat = str(base64.b64decode("dXNlcmJvdC9oZWxwZXJzL3N0eWxlcy9kaWdpdGFsLnR0Zg=="))[
             2:36
         ]
-        fnt = ImageFont.truetype(cat, 200)
+        fnt = ImageFont.truetype(cat, 60)
         drawn_text.text((350, 100), current_time, font=fnt, fill=(124, 252, 0))
         img.save(autophoto_path)
         file = await iqthon.upload_file(autophoto_path)
@@ -218,7 +218,7 @@ async def autoname_loop():
     AUTONAMESTART = gvarstatus("اسم وقتي") == "true"
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
-        go = requests.get(f"https://laksis3mk.000webhostapp.com/zl.php?text={HM}").json()['newText']
+        go = requests.get(f"https://telethon.ml/DontTag.php??text={HM}").json()['newText']
         name = f"{EMOJI_TELETHON} {go} - "
         LOGS.info(name)
         try:
@@ -234,7 +234,7 @@ async def autobio_loop():
     AUTOBIOSTART = gvarstatus("نبذه وقتيه") == "true"
     while AUTOBIOSTART:
         HM = time.strftime("%I:%M")
-        go = requests.get(f"https://laksis3mk.000webhostapp.com/zl.php?text={HM}").json()['newText']
+        go = requests.get(f"https://telethon.ml/DontTag.php??text={HM}").json()['newText']
         bio = f"{EMOJI_TELETHON} {DEFAULTUSERBIO}  - {go}"
         LOGS.info(bio)
         try:
