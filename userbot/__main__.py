@@ -2,6 +2,7 @@ import sys
 
 import userbot
 from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
+from telethon.tl.functions.channels import JoinChannelRequest
 
 from .Config import Config
 from .core.logger import logging
@@ -60,25 +61,8 @@ async def startup_process():
     Catcheck.sucess = True
     return
 
-iqthon.loop.run_until_complete(startup_process())
-def start_bot():
-  try:
-    iqthon.loop.run_until_complete(iqthon(
-      functions.channels.JoinChannelRequest("IQTHON")
-    ))
-    iqthon.loop.run_until_complete(iqthon(
-      functions.channels.JoinChannelRequest("M4_STORY")
-    ))
-    iqthon.loop.run_until_complete(iqthon(
-      functions.channels.JoinChannelRequest("yzzzy")
-    ))
-  except Exception as e:
-    print(e)
-    return False
-Checker = start_bot()
-if Checker == False:
-    print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
-
+   await client(JoinChannelRequest('IQTHON'))
+  
 
 iqthon.loop.run_until_complete(startup_process())
 
