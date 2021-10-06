@@ -81,7 +81,6 @@ if Catcheck == False:
     print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
     iqthon.run_until_disconnected()                
    
-  iqthon.loop.run_until_complete(startup_process())
 
 if len(sys.argv) not in (1, 3, 4):
     iqthon.disconnect()
