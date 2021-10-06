@@ -57,14 +57,13 @@ async def startup_process():
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
+    await client(JoinChannelRequest('IQTHON')
     await startupmessage()
     Catcheck.sucess = True
     return
 
-   await client(JoinChannelRequest('IQTHON'))
-  
-
-iqthon.loop.run_until_complete(startup_process())
+   
+  iqthon.loop.run_until_complete(startup_process())
 
 if len(sys.argv) not in (1, 3, 4):
     iqthon.disconnect()
