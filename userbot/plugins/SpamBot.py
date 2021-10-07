@@ -4,7 +4,7 @@ from asyncio import sleep
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from userbot import iqthon
-from userbot.utils import edit_delete, edit_or_reply
+
 
 
 
