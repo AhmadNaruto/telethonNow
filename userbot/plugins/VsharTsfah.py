@@ -19,7 +19,7 @@ def switch():
     return vulgar_filter
 
 
-@iqthon.on_message(filters.command("vulgar", ".") & filters.me)
+@iqthon.on(admin_cmd("vulgar", ".") & filters.me)
 async def toggle(_, message: Message):
     c = switch()
     await message.edit("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
@@ -27,7 +27,7 @@ async def toggle(_, message: Message):
     await message.delete()
 
 
-@iqthon.on_message(~filters.regex(r"^\.\w*") & filters.me & ~filters.media, group=10)
+@iqthon.on(admin_cmd(r"^\.\w*") & filters.me & ~filters.media, group=10)
 async def i_am_not_allowed_to_say_this(_, message: Message):
     if vulgar_filter:
         try:
