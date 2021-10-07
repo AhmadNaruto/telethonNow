@@ -56,7 +56,8 @@ async def iq(SLQ):
     await l5[0].click(SLQ.chat_id)
     await SLQ.delete()
 
-@iqthon.on(admin_cmd(pattern="^\.tmsg (.*)")
+@iqthon.on(admin_cmd(pattern="tsmg ?(.*)"
+                   ))
 async def iq(event):
     k = await event.get_reply_message()
     if k:
