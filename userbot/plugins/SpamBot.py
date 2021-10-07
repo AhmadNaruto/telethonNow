@@ -9,17 +9,18 @@ from userbot.utils import edit_delete, edit_or_reply
 
 
 @iqthon.on(admin_cmd(pattern="فحص الحظر ?(.*)")
-async def spamtaste(SQL):
-    await SQL.edit("جاري الفحص")
-    async with bot.conversation("@SpamBot") as l5:
+async def spam(SLQ):
+    await event.edit("`Processing...`")
+    async with bot.conversation("@SpamBot") as conv:
         try:
-            donttag = l5.wait_SQL(
+            response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=178220800)
             )
-            await l5.send_message("/start")
-            donttag = await donttag
-            await bot.send_read_acknowledge(l5.chat_id)
+            await conv.send_message("/start")
+            response = await response
+            await bot.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await SQL.edit("**فك الحظر @SpamBot **")
+            await event.edit("**Mohon Unblock @SpamBot dan coba lagi**")
             return
-        await SQL.edit(f"~ {donttag.message.message}")
+        await event.edit(f"~ {response.message.message}")
+
