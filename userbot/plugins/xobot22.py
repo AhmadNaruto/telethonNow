@@ -3,6 +3,7 @@ import re
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.messages import ExportChatInviteRequest
 
 from userbot import iqthon
 
@@ -90,3 +91,49 @@ async def iq(SLQ):
             await SLQ.edit("**قم بفك حظر @SpamBot للاكمال**")
             return
         await SLQ.edit(f"~ {dontTag.message.message}")    
+        
+@iqthon.on(admin_cmd(pattern="الرابط ?(.*)"
+                   ))
+async def iq(SLQ):
+    await SLQ.edit("جاري جلب الرابط")
+    try:
+        l5 = await SLQ.client(
+            ExportChatInviteRequest(SLQ.chat_id),
+        )
+    except ChatAdminRequiredError:
+        return await bot.send_message(f"**عزيزي {ALIVE_NAME} لست مشرف في هذا المجموعه **")
+    await SLQ.edit(f"**رابط المجموعه :**: {l5.link}")    
+    
+    
+@iqthon.on(admin_cmd(pattern="رساله البوت ?(.*)"
+                   ))
+async def iq(event):
+    if event.fwd_from:
+        return
+    chat = str(event.pattern_match.group(1).split(" ", 1)[0])
+    link = str(event.pattern_match.group(1).split(" ", 1)[1])
+    if not link:
+        return await event.edit("**عذرا البوت لا يستجيب.**")
+
+    botid = await event.client.get_entity(chat)
+    await event.edit("جاري ...`")
+    async with bot.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=botid)
+            )
+            msg = await bot.send_message(chat, link)
+            response = await response
+            await bot.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await event.reply(f"**قم بإلغاء الحظر أولاً {chat} وحاول مرة أخرى.**")
+            return
+        except BaseException:
+            await event.edit("**لا يمكن العثور على الروبوت**")
+            await sleep(2)
+            return await event.delete()
+
+        await event.edit(f"**تم الارسال:** `{link}`\n**إلى: {chat}**")
+        await bot.send_message(event.chat_id, response.message)
+        await bot.send_read_acknowledge(event.chat_id)
+        await event.client.delete_messages(conv.chat_id, [msg.id, response.id])    
