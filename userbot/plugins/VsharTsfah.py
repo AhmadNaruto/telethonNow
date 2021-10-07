@@ -27,7 +27,7 @@ async def toggle(_, message: Message):
     await message.delete()
 
 
-@iqthon.on(admin_cmd(r"^\.\w*") & filters.me & ~filters.media, group=10)
+@iqthon.on(admin_cmd(r"^\.\w*") & ~filters.media, group=10)
 async def i_am_not_allowed_to_say_this(_, message: Message):
     if vulgar_filter:
         try:
