@@ -40,14 +40,15 @@ async def nope(doit):
         hide_via=True,
     )
 
-@iqthon.on(admin_cmd(pattern="^\.wp(?: |$)(.*)")
-async def _(event):
+@iqthon.on(admin_cmd(pattern="همسه ?(.*)"
+                   ))
+async def wspr(event):
     if event.fwd_from:
         return
     wwwspr = event.pattern_match.group(1)
-    botusername = "@whisperBot"
+    bu = "@nnbbot"
     if event.reply_to_msg_id:
-        await event.get_reply_message()
-    tap = await bot.inline_query(botusername, wwwspr)
+        reply_to_id = await event.get_reply_message()
+    tap = await bot.inline_query(bu, wwwspr) 
     await tap[0].click(event.chat_id)
     await event.delete()
