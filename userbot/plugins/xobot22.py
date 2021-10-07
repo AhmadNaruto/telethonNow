@@ -2,6 +2,7 @@ import re
 
 
 from telethon import events
+from asyncio.exceptions import TimeoutError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
@@ -137,3 +138,122 @@ async def iq(event):
         await bot.send_message(event.chat_id, response.message)
         await bot.send_read_acknowledge(event.chat_id)
         await event.client.delete_messages(conv.chat_id, [msg.id, response.id])    
+        
+@iqthon.on(admin_cmd(pattern="بي دي اف ?(.*)"
+                   ))
+async def _(event):
+    if not event.reply_to_msg_id:
+        return await event.edit("**الرجاء الرد على أي نص**")
+    reply_message = await event.get_reply_message()
+    chat = "@office2pdf_bot"
+    await event.edit("**جاري تحويل إلى PDF...**")
+    try:
+        async with bot.conversation(chat) as conv:
+            try:
+                msg_start = await conv.send_message("/start")
+                response = await conv.get_response()
+                msg = await conv.send_message(reply_message)
+                convert = await conv.send_message("/ready2conv")
+                cnfrm = await conv.get_response()
+                editfilename = await conv.send_message("Yes")
+                enterfilename = await conv.get_response()
+                filename = await conv.send_message("IQTHON")
+                started = await conv.get_response()
+                pdf = await conv.get_response()
+                """iq"""
+                await bot.send_read_acknowledge(conv.chat_id)
+            except YouBlockedUserError:
+                await event.edit("**قم بفك الحظر من البوت : @office2pdf_bot **")
+                return
+            await event.client.send_message(event.chat_id, pdf)
+            await event.client.delete_messages(
+                conv.chat_id,
+                [
+                    msg_start.id,
+                    response.id,
+                    msg.id,
+                    started.id,
+                    filename.id,
+                    editfilename.id,
+                    enterfilename.id,
+                    cnfrm.id,
+                    pdf.id,
+                    convert.id,
+                ],
+            )
+            await event.delete()
+    except TimeoutError:
+        return await event.edit(
+            "**هناك خطا نعتذر**"
+        )        
+
+@iqthon.on(admin_cmd(pattern="ملصقي ?(.*)"
+                   ))
+async def iq(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+        await edit_delete(event, "**الرجاء الرد على الرسالة**")
+        return
+    reply_message = await event.get_reply_message()
+    warna = event.pattern_match.group(1)
+    chat = "@QuotLyBot"
+    await edit_or_reply(event, "**جاري...**")
+    async with bot.conversation(chat) as conv:
+        try:
+            response = conv.wait_event(
+                events.NewMessage(incoming=True, from_users=1031952739)
+            )
+            first = await conv.send_message(f"/qcolor {warna}")
+            ok = await conv.get_response()
+            await asyncio.sleep(2)
+            second = await bot.forward_messages(chat, reply_message)
+            response = await response
+        except YouBlockedUserError:
+            await event.reply("**قم بفك الحظر من البوت : @QuotLyBot **")
+            return
+        if response.text.startswith("Hi!"):
+            await edit_or_reply(
+                event, "**الرجاء تعطيل إعادة توجيه إعدادات الخصوصية الخاصة بك**"
+            )
+        else:
+            await event.delete()
+            await bot.forward_messages(event.chat_id, response.message)
+    await bot.delete_messages(conv.chat_id, [first.id, ok.id, second.id, response.id])
+    
+    
+@iqthon.on(admin_cmd(pattern="اسم الاغنيه ?(.*)"
+                   ))
+async def iq(event):
+    if not event.reply_to_msg_id:
+        return await event.edit("**الرجاء الرد على الرسالة**")
+    reply_message = await event.get_reply_message()
+    chat = "@auddbot"
+    try:
+        async with event.client.conversation(chat) as conv:
+            try:
+                await event.edit("**التعرف على الأغاني...**")
+                start_msg = await conv.send_message("/start")
+                await conv.get_response()
+                send_audio = await conv.send_message(reply_message)
+                check = await conv.get_response()
+                if not check.text.startswith("Audio received"):
+                    return await event.edit(
+                        "**حدث خطأ أثناء تحديد الأغنية. حاول استخدام رسالة صوتية تتراوح مدتها من 5 إلى 10 ثوانٍ.**"
+                    )
+                await event.edit("**انتظر لحظة...**")
+                result = await conv.get_response()
+                await event.client.send_read_acknowledge(conv.chat_id)
+            except YouBlockedUserError:
+                await event.edit("**قم بفك الحظر من البوت : @auddbot dan coba lagi:")
+                return
+            namem = f"**إسم الأغنية : **`{result.text.splitlines()[0]}`\
+        \n\n**تفاصيل : **__{result.text.splitlines()[2]}__"
+            await event.edit(namem)
+            await event.client.delete_messages(
+                conv.chat_id, [start_msg.id, send_audio.id, check.id, result.id]
+            )
+    except TimeoutError:
+        return await event.edit(
+            "**هناك خطا نعتذر**"
+        )    
