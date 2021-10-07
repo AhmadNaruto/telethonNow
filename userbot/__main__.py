@@ -79,11 +79,8 @@ def start_bot():
 Checker = start_bot()
 if Checker == False:
     print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
-    
-
-iqthon.loop.run_until_complete(startup_process())
-
-
+    iqthon.disconnect()
+    sys.exit()
 if len(sys.argv) not in (1, 3, 4):
     iqthon.disconnect()
 elif not Catcheck.sucess:
