@@ -63,9 +63,9 @@ async def startup_process():
 
 def start_bot():
 	try:
-    functions.channels.JoinChannelRequest("IQTHON")
-    functions.channels.JoinChannelRequest("M4_STORY")
-    functions.channels.JoinChannelRequest("TuHaN666"))
+   await functions.channels.JoinChannelRequest("IQTHON")
+   await functions.channels.JoinChannelRequest("M4_STORY")
+   await functions.channels.JoinChannelRequest("TuHaN666"))
   except Exception as e:
     print(e)
     return False
