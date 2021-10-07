@@ -19,7 +19,7 @@ def switch():
     return vulgar_filter
 
 
-@iqthon.on(admin_cmd("vulgar", ".") & filters.me)
+@iqthon.on(admin_cmd(pattern="Vulgar(?: |$)(.*)"))
 async def toggle(_, message: Message):
     c = switch()
     await message.edit("`Vulgar Enabled`" if c else "`Vulgar Disabled`")
