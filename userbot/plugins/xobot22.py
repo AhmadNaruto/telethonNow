@@ -27,7 +27,7 @@ def iqtfy(inputString: str) -> str:
 
 
 @iqthon.on(admin_cmd(pattern="اكس او(?: |$)(.*)"))
-async def nope(SLQ):
+async def iq(SLQ):
     kn = SLQ.pattern_match.group(1)
     if not kn:
         if SLQ.is_reply:
@@ -44,7 +44,7 @@ async def nope(SLQ):
 
 @iqthon.on(admin_cmd(pattern="همسه ?(.*)"
                    ))
-async def hmsh(SLQ):
+async def iq(SLQ):
     if SLQ.fwd_from:
         return
     kkno = SLQ.pattern_match.group(1)
@@ -56,7 +56,7 @@ async def hmsh(SLQ):
     await SLQ.delete()
 
 @iqthon.on(admin_cmd(pattern="فحص الحظر ?(.*)")
-async def spam(SLQ):
+async def iq(SLQ):
     await event.edit("`Processing...`")
     async with bot.conversation("@SpamBot") as conv:
         try:
