@@ -78,7 +78,7 @@ async def iq(SLQ):
                    ))
 async def iq(SLQ):
     await SLQ.edit("جاري الفحص")
-    async with bot.dontTag("@SpamBot") as l5:
+    async with bot.conversation("@SpamBot") as l5:
         try:
             dontTag = l5.wait_SLQ(
                 events.NewMessage(incoming=True, from_users=178220800)
