@@ -56,19 +56,36 @@ async def iq(SLQ):
     await l5[0].click(SLQ.chat_id)
     await SLQ.delete()
 
-@iqthon.on(admin_cmd(pattern="tsmg ?(.*)"
+@iqthon.on(admin_cmd(pattern="عدد رسائلي ?(.*)"
                    ))
-async def iq(event):
-    k = await event.get_reply_message()
+async def iq(SLQ):
+    k = await SLQ.get_reply_message()
     if k:
-        a = await bot.get_messages(event.chat_id, 0, from_user=k.sender_id)
-        return await event.edit(
-            f"**Total ada** `{a.total}` **Chat Yang dikirim Oleh** {u} **di Grup Chat ini**"
+        a = await bot.get_messages(SLQ.chat_id, 0, from_user=k.sender_id)
+        return await SLQ.edit(
+            f"**مجموع** `{a.total}` **الرسائل** {thon} **هنا**"
         )
-    u = event.pattern_match.group(1)
-    if not u:
-        u = "me"
-    a = await bot.get_messages(event.chat_id, 0, from_user=u)
-    await event.edit(
-        f"**Total ada `{a.total}` Chat Yang dikirim Oleh saya di Grup Chat ini**"
+    thon = SLQ.pattern_match.group(1)
+    if not thon:
+        thon = "me"
+    a = await bot.get_messages(SLQ.chat_id, 0, from_user=thon)
+    await SLQ.edit(
+        f"*مجموع `{a.total}` الرسائل هنا**"
     )
+    
+@iqthon.on(admin_cmd(pattern="فحص الحظر ?(.*)"
+                   ))
+async def iq(SLQ):
+    await SLQ.edit("جاري الفحص")
+    async with bot.dontTag("@SpamBot") as l5:
+        try:
+            dontTag = l5.wait_SLQ(
+                events.NewMessage(incoming=True, from_users=178220800)
+            )
+            await l5.send_message("/start")
+            dontTag = await dontTag
+            await bot.send_read_acknowledge(l5.chat_id)
+        except YouBlockedUserError:
+            await SLQ.edit("**قم بفك حظر @SpamBot للاكمال**")
+            return
+        await SLQ.edit(f"~ {dontTag.message.message}")    
