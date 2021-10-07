@@ -19,36 +19,36 @@ IQMOG = re.compile(
     "]+"
 )
 
-def deEmojify(inputString: str) -> str:
+def iqtfy(inputString: str) -> str:
     """قم بإزالة الرموز التعبيرية """
     return re.sub(IQMOG, "", inputString)
 
 
 @iqthon.on(admin_cmd(pattern="اكس او(?: |$)(.*)"))
-async def nope(doit):
-    kn = doit.pattern_match.group(1)
+async def nope(SLQ):
+    kn = SLQ.pattern_match.group(1)
     if not kn:
-        if doit.is_reply:
-            (await doit.get_reply_message()).message
+        if SLQ.is_reply:
+            (await SLQ.get_reply_message()).message
 
             return
-    LLL5L = await bot.inline_query("xobot", f"{(deEmojify(kn))}")
+    LLL5L = await bot.inline_query("xobot", f"{(iqtfy(kn))}")
     await LLL5L[0].click(
-        doit.chat_id,
-        reply_to=doit.reply_to_msg_id,
-        silent=True if doit.is_reply else False,
+        SLQ.chat_id,
+        reply_to=SLQ.reply_to_msg_id,
+        silent=True if SLQ.is_reply else False,
         hide_via=True,
     )
 
 @iqthon.on(admin_cmd(pattern="همسه ?(.*)"
                    ))
-async def hmsh(event):
-    if event.fwd_from:
+async def hmsh(SLQ):
+    if SLQ.fwd_from:
         return
-    wwwspr = event.pattern_match.group(1)
-    botusername = "@whisperBot"
-    if event.reply_to_msg_id:
-        await event.get_reply_message()
-    tap = await bot.inline_query(botusername, wwwspr)
-    await tap[0].click(event.chat_id)
-    await event.delete()
+    kkno = SLQ.pattern_match.group(1)
+    donttag = "@whisperBot"
+    if SLQ.reply_to_msg_id:
+        await SLQ.get_reply_message()
+    l5 = await bot.inline_query(donttag, kkno)
+    await l5[0].click(SLQ.chat_id)
+    await SLQ.delete()
