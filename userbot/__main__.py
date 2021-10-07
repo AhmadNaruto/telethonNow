@@ -61,7 +61,8 @@ async def startup_process():
     Catcheck.sucess = True
     return
 
-try:
+def start_bot():
+	try:
     iqthon.loop.run_until_complete(iqthon(
       functions.channels.JoinChannelRequest("IQTHON")
     ))
@@ -72,7 +73,12 @@ try:
       functions.channels.JoinChannelRequest("TuHaN666")
     ))
   except Exception as e:
-    JoinChannelRequest.error("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
+    print(e)
+    return False
+Checker = start_bot()
+if Checker == False:
+    print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
+
                    
 
    
