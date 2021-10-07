@@ -79,7 +79,8 @@ def start_bot():
 check = start_bot()
 if check == False:
     print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
-    iqthon.loop.run_until_complete(setup_bot())               
+                   
+iqthon.loop.run_until_complete(startup_process())
    
 
 if len(sys.argv) not in (1, 3, 4):
