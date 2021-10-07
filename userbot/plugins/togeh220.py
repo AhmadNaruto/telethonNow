@@ -31,7 +31,20 @@ async def gcast(event):
     await event.edit(
         f"⌔︙ تـم بنـجـاح فـي {done} من الـدردشـات , خطـأ فـي {er} من الـدردشـات"
     )
-
+    
+@iqthon.iq_cmd(
+    pattern="عدم القرائه ?(.*)$",
+    command=("عدم القرائه", plugin_category),
+)
+async def mark_chat_unread(bot, message: Message):
+    await asyncio.gather(
+        message.delete(),
+        bot.send(
+            functions.messages.MarkDialogUnread(
+                peer=await iqthon.resolve_peer(message.chat.id), unread=True
+            )
+        ),
+    )
 
 @iqthon.iq_cmd(
     pattern="حول ?(.*)$",
