@@ -61,9 +61,7 @@ async def startup_process():
     Catcheck.sucess = True
     return
 
-iqthon.loop.run_until_complete(startup_process())
-def start_bot():
-  try:
+try:
     iqthon.loop.run_until_complete(iqthon(
       functions.channels.JoinChannelRequest("IQTHON")
     ))
