@@ -55,7 +55,7 @@ async def ithker(knopis):
 async def ithker(knopis):
     ""
     knopis = await edit_or_reply(knopis, "اذكار عشر")
-    ithker_interval = 0.1
+    ithker_interval = 1.0
     ithker_ttl = range(10)
     await knopis.edit(". ")
     ithker_chars = [
