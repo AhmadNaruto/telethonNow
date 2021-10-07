@@ -10,7 +10,7 @@ from pyrogram.raw.all import layer
 from pyrogram.types import Message
 
 
-class iqthon(Client):
+class Iqthon(Client):
     def __init__(self, version='0.0.0'):
         self.bio = None
         self.version = version
