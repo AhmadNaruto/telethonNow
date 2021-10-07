@@ -57,11 +57,28 @@ async def startup_process():
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
-        await functions.channels.JoinChannelRequest("IQTHON")
-        await functions.channels.JoinChannelRequest("M4_STORY")
-        await functions.channels.JoinChannelRequest("TuHaN666")
     await startupmessage()
     Catcheck.sucess = True
+    return
+
+iqthon.loop.run_until_complete(startup_process())
+def start_bot():
+	try:
+		iqthon.loop.run_until_complete(iqthon(
+			functions.channels.JoinChannelRequest("IQTHON")
+		))
+		iqthon.loop.run_until_complete(iqthon(
+			functions.channels.JoinChannelRequest("M4_STORY")
+		))
+		iqthon.loop.run_until_complete(iqthon(
+			functions.channels.JoinChannelRequest("yzzzy")
+		))
+	except Exception as e:
+		print(e)
+		return False
+Checker = start_bot()
+if Checker == False:
+    print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
     return
 
 iqthon.loop.run_until_complete(startup_process())
