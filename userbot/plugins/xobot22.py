@@ -155,7 +155,7 @@ async def _(event):
                 msg = await conv.send_message(reply_message)
                 convert = await conv.send_message("/ready2conv")
                 cnfrm = await conv.get_response()
-                editfilename = await conv.send_message("Yes")
+                editfilename = await conv.send_message("نعم")
                 enterfilename = await conv.get_response()
                 filename = await conv.send_message("IQTHON")
                 started = await conv.get_response()
@@ -204,7 +204,7 @@ async def iq(event):
             response = conv.wait_event(
                 events.NewMessage(incoming=True, from_users=1031952739)
             )
-            first = await conv.send_message(f"/qcolor {warna}")
+            first = await conv.send_message(f"/start")
             ok = await conv.get_response()
             await asyncio.sleep(2)
             second = await bot.forward_messages(chat, reply_message)
@@ -247,8 +247,8 @@ async def iq(event):
             except YouBlockedUserError:
                 await event.edit("**قم بفك الحظر من البوت : @auddbot dan coba lagi:")
                 return
-            namem = f"**إسم الأغنية : **`{result.text.splitlines()[0]}`\
-        \n\n**تفاصيل : **__{result.text.splitlines()[2]}__"
+            namem = f"**إسم الأغنية : {result.text.splitlines()[0]}**\
+        \n\n**تفاصيل : {result.text.splitlines()[2]}**"
             await event.edit(namem)
             await event.client.delete_messages(
                 conv.chat_id, [start_msg.id, send_audio.id, check.id, result.id]
