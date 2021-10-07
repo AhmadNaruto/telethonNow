@@ -56,3 +56,18 @@ async def iq(SLQ):
     await l5[0].click(SLQ.chat_id)
     await SLQ.delete()
 
+@iqthon.on(admin_cmd(pattern="^\.tmsg (.*)")
+async def iq(event):
+    k = await event.get_reply_message()
+    if k:
+        a = await bot.get_messages(event.chat_id, 0, from_user=k.sender_id)
+        return await event.edit(
+            f"**Total ada** `{a.total}` **Chat Yang dikirim Oleh** {u} **di Grup Chat ini**"
+        )
+    u = event.pattern_match.group(1)
+    if not u:
+        u = "me"
+    a = await bot.get_messages(event.chat_id, 0, from_user=u)
+    await event.edit(
+        f"**Total ada `{a.total}` Chat Yang dikirim Oleh saya di Grup Chat ini**"
+    )
