@@ -5,7 +5,7 @@ from pyrogram.raw import functions
 from pyrogram.types import Message
 
 from userbot import iqthon
-
+from userbot.utils import UserBot
 
 @UserBot.on_message(filters.command(["unread", "un"], ".") & filters.me)
 async def mark_chat_unread(bot, message: Message):
