@@ -80,7 +80,7 @@ async def iq(SLQ):
     await SLQ.edit("جاري الفحص")
     async with bot.conversation("@SpamBot") as l5:
         try:
-            dontTag = l5.wait_SLQ(
+            dontTag = l5.wait_event(
                 events.NewMessage(incoming=True, from_users=178220800)
             )
             await l5.send_message("/start")
