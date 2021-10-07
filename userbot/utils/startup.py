@@ -6,7 +6,6 @@ from datetime import timedelta
 from pathlib import Path
 
 import psutil
-from pyrogram import Client
 from pyrogram.raw import functions
 from pyrogram.raw.all import layer
 from pyrogram.types import Message
