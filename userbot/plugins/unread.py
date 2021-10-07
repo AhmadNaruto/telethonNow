@@ -4,16 +4,16 @@ from pyrogram import filters
 from pyrogram.raw import functions
 from pyrogram.types import Message
 
-from userbot.plugins import UserBot
+from userbot import iqthon
 
 
-@UserBot.on_message(filters.command(["unread", "un"], ".") & filters.me)
+@Iqthon.on_message(filters.command(["unread", "un"], ".") & filters.me)
 async def mark_chat_unread(bot, message: Message):
     await asyncio.gather(
         message.delete(),
         bot.send(
             functions.messages.MarkDialogUnread(
-                peer=await UserBot.resolve_peer(message.chat.id), unread=True
+                peer=await Iqthon.resolve_peer(message.chat.id), unread=True
             )
         ),
     )
