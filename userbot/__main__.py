@@ -72,11 +72,7 @@ try:
       functions.channels.JoinChannelRequest("TuHaN666")
     ))
   except Exception as e:
-    print(e)
-    return False
-check = start_bot()
-if check == False:
-    print("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
+    JoinChannelRequest.error("لايمكن البدء حتى الاشتراك بالقنوات التاليه في تليجرام @yzzzy - @iqthon - @M4_STORY")
                    
 
    
