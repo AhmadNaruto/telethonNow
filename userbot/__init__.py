@@ -79,8 +79,8 @@ BOTLOG = Config.BOTLOG
 BOTLOG_CHATID = Config.BOTLOG_CHATID
 PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
 # Last.fm Module
-BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
-DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
+BIO_PREFIX = int(gvarstatus("BIO_PREFIX", None)
+DEFAULT_BIO = int(gvarstatus("DEFAULT_BIO", None)
 
 LASTFM_API = int(gvarstatus("LASTFM_API", None)
 LASTFM_SECRET = int(gvarstatus("LASTFM_SECRET", None)
@@ -93,4 +93,4 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
                            username=LASTFM_USERNAME,
                            password_hash=LASTFM_PASS)
 else:
-    lastfm = 
+    lastfm = None
