@@ -77,21 +77,6 @@ LOAD_PLUG = {}
 BOTLOG = Config.BOTLOG
 BOTLOG_CHATID = Config.BOTLOG_CHATID
 PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
-
-
-# Last.fm Module
-BIO_PREFIX = Config.environ.get("BIO_PREFIX", None)
-DEFAULT_BIO = Config.environ.get("DEFAULT_BIO", None)
-
-LASTFM_API = Config.environ.get("LASTFM_API", None)
-LASTFM_SECRET = Config.environ.get("LASTFM_SECRET", None)
-LASTFM_USERNAME = Config.environ.get("LASTFM_USERNAME", None)
-LASTFM_PASSWORD_PLAIN = Config.environ.get("LASTFM_PASSWORD", None)
-LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
-if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
-    lastfm = LastFMNetwork(api_key=LASTFM_API,
-                           api_secret=LASTFM_SECRET,
-                           username=LASTFM_USERNAME,
-                           password_hash=LASTFM_PASS)
-else:
-    lastfm = None
+BIO_PREFIX = Config.BIO_PREFIX
+DEFAULT_BIO = Config.DEFAULT_BIO
+LASTFM_USERNAME = Config.LASTFM_USERNAME
