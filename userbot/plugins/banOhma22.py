@@ -6,8 +6,10 @@ from userbot import iqthon
 from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
+from . import mention
+
 # ================= banohme =================
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
+DEFAULTUSER = "{mention}"
 # ============================================
 
 
