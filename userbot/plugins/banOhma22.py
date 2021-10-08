@@ -2,7 +2,6 @@ import asyncio
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 from userbot import iqthon
-from . import mention
 
 
 
@@ -13,7 +12,7 @@ async def banohme(event):
         return
     gbunVar = event.text
     gbunVar = gbunVar[6:]
-    mentions = f"جاري حظر المستخدم {mention}\n"
+    mentions = f"جاري حظر المستخدم :\n"
     no_reason = "لايوجد سبب "
     await event.edit("**☠️**")
     asyncio.sleep(3.5)
@@ -33,7 +32,7 @@ async def banohme(event):
         else:
             jnl = ("تم الحظر"
                    "[{}](tg://user?id={})"
-                   f"` جاري حظر المستخدم سيدي : {mention}\n\n"
+                   f"` جاري حظر المستخدم سيدي : \n\n"
                    "**الاسم: ** __{}__\n"
                    "**الايدي : ** `{}`\n"
                    ).format(firstname, idd, firstname, idd)
@@ -50,7 +49,7 @@ async def banohme(event):
             await reply_message.reply(jnl)
     else:
         mention = (
-            f"جاري حظر المستخدم سيدي : {mention} ")
+            f"جاري حظر المستخدم سيدي : ")
         await event.reply(mention)
     await event.delete()
 
