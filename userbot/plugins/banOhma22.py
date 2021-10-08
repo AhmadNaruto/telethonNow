@@ -3,8 +3,9 @@ from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChannelParticipantsAdmins
 from userbot import iqthon
-from userbot import ALIVE_NAME
-
+from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
+from ..helpers.utils import reply_id
+from ..sql_helper.globals import gvarstatus
 # ================= banohme =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
