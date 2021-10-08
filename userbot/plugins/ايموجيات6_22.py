@@ -72,10 +72,11 @@ async def iq(event):
             "😎 \n/\\_,__😫 \n  //    //       \\",
             "😖 \n/\\_,💦_😋  \n  //         //        \\",
             "  😭      ☺️ \n  /|\\   /(👶)\\ \n  /!\\   / \\ ",
-            "😅`"]
-                 for i in animation_ttl:
-                     await asyncio.sleep(animation_interval)
-                     await event.edit(animation_chars[i % 103])
+            "😅`"
+            ]
+    for i in animation_ttl:
+        await asyncio.sleep(animation_interval)
+        await event.edit(animation_chars[i % 103]) 
 
                   
 
