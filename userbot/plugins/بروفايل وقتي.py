@@ -45,7 +45,6 @@ autopic_path = os.path.join(os.getcwd(), "userbot", "original_pic.png")
 digitalpic_path = os.path.join(os.getcwd(), "userbot", "digital_pic.png")
 autophoto_path = os.path.join(os.getcwd(), "userbot", "photo_pfp.png")
 EMOJI_TELETHON = gvarstatus("ALIVE_EMOJI") or "•"
-name1 = first_name
 digitalpfp = Config.DIGITAL_PIC or "https://telegra.ph/file/6b5db91f38e919e386168.jpg"
 
 COLLECTION_STRINGS = {
@@ -220,7 +219,7 @@ async def autoname_loop():
         name = f"{EMOJI_TELETHON} {go} {name1} "
         LOGS.info(name)
         try:
-            await iqthon(functions.account.UpdateProfileRequest(first_name=name))
+            await iqthon(functions.account.UpdateProfileRequest(first_name=name=name1))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await asyncio.sleep(ex.seconds)
