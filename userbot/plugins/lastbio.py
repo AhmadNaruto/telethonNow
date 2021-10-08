@@ -10,7 +10,7 @@ from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.errors.rpcerrorlist import FloodWaitError
 from userbot import iqthon
-from userbot import (BIO_PREFIX, lastfm, LASTFM_USERNAME)
+from userbot import (BIO_PREFIX, LASTFM_USERNAME)
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import (
     AUTONAME,
