@@ -8,9 +8,7 @@ from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
 from . import mention
 
-# ================= banohme =================
-DEFAULTUSER = "{mention}"
-# ============================================
+
 
 
 @iqthon.on(admin_cmd(pattern="بان وهمي(?: |$)(.*)"))
@@ -19,7 +17,7 @@ async def banohme(event):
         return
     gbunVar = event.text
     gbunVar = gbunVar[6:]
-    mentions = f"جاري حظر المستخدم {DEFAULTUSER}\n"
+    mentions = f"جاري حظر المستخدم {mention}\n"
     no_reason = "لايوجد سبب "
     await event.edit("**☠️**")
     asyncio.sleep(3.5)
@@ -39,7 +37,7 @@ async def banohme(event):
         else:
             jnl = ("تم الحظر"
                    "[{}](tg://user?id={})"
-                   f"` حظر المستخدم` {DEFAULTUSER}\n\n"
+                   f"` حظر المستخدم` {mention}\n\n"
                    "**الاسم: ** __{}__\n"
                    "**الايدي : ** `{}`\n"
                    ).format(firstname, idd, firstname, idd)
@@ -56,7 +54,7 @@ async def banohme(event):
             await reply_message.reply(jnl)
     else:
         mention = (
-            f"حظر المستخدم {DEFAULTUSER} ")
+            f"حظر المستخدم {mention} ")
         await event.reply(mention)
     await event.delete()
 
