@@ -58,7 +58,6 @@ async def typewriter(typew):
 async def _(event):
     "أمر الرسوم المتحركة"
     animation_interval = 3
-
     animation_ttl = range(0, 103)
     animation_chars = [
             "  😐             😕 \n/👕\\         <👗\\ \n 👖               /|",
@@ -74,12 +73,11 @@ async def _(event):
             "😖 \n/\\_,💦_😋  \n  //         //        \\",
             "  😭      ☺️ \n  /|\\   /(👶)\\ \n  /!\\   / \\ ",
             "😅`"]
-    
-        for i in animation_ttl:
+                 for i in animation_ttl:
+                     await asyncio.sleep(animation_interval)
+                     await event.edit(animation_chars[i % 103])
 
-            await asyncio.sleep(animation_interval)
-
-            await event.edit(animation_chars[i % 103])      
+                  
 
 @iqthon.on(admin_cmd(pattern="احبك(?: |$)(.*)"))            
 async def koc(e):
