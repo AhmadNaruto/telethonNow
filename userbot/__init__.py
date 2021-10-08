@@ -58,7 +58,7 @@ try:
 except Exception:
     HEROKU_APP = None
 
-
+ 
 # Global Configiables
 COUNT_MSG = 0
 USERS = {}
@@ -77,3 +77,21 @@ LOAD_PLUG = {}
 BOTLOG = Config.BOTLOG
 BOTLOG_CHATID = Config.BOTLOG_CHATID
 PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
+
+
+# Last.fm Module
+BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
+DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
+
+LASTFM_API = os.environ.get("LASTFM_API", None)
+LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
+LASTFM_USERNAME = os.environ.get("LASTFM_USERNAME", None)
+LASTFM_PASSWORD_PLAIN = os.environ.get("LASTFM_PASSWORD", None)
+LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
+if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
+    lastfm = LastFMNetwork(api_key=LASTFM_API,
+                           api_secret=LASTFM_SECRET,
+                           username=LASTFM_USERNAME,
+                           password_hash=LASTFM_PASS)
+else:
+    lastfm = None
