@@ -2,7 +2,7 @@ from telethon.errors import ChatSendInlineForbiddenError, ChatSendStickersForbid
 from userbot import iqthon
 
 
-@iqthon.on(admin_cmd(pattern="ملصق متحرك (?: |$)(.*)"))
+@iqthon.on(admin_cmd(pattern="ملصق متحرك(?: |$)(.*)"))
 async def honkasays(event):
     await event.edit("`Sedang Memproses, Mohon Tunggu Sebentar...`")
     text = event.pattern_match.group(1)
