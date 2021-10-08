@@ -49,15 +49,14 @@ LastLog = False
 
 @iqthon.on(admin_cmd(pattern="listfm(?: |$)(.*)"))
 async def last_fm(lastFM):
-    """ لأمر .lastfm ، قم بإحضار بيانات scrobble من last.fm."""
+    """ ."""
     await lastFM.edit("`يعالج...`")
     preview = None
     playing = User(LASTFM_USERNAME).get_now_playing()
     username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
     if playing is not None:
         try:
-            image = User(LASTFM_USERNAME,
-                         lastfm).get_now_playing().get_cover_image()
+            image = User(LASTFM_USERNAME).get_now_playing().get_cover_image()
         except IndexError:
             image = None
         tags = await gettags(isNowPlaying=True, playing=playing)
