@@ -15,7 +15,7 @@ async def banohme(event):
     mentions = f"جاري حظر المستخدم :\n"
     no_reason = "-"
     await event.edit("**☠️**")
-    asyncio.sleep(3.5)
+    asyncio.sleep(2)
     chat = await event.get_input_chat()
     async for x in bot.iter_participants(chat, filter=ChannelParticipantsAdmins):
         mentions += f""
@@ -30,15 +30,15 @@ async def banohme(event):
         if idd == 1226408155:
             await reply_message.reply("عذرا هذا مبرمج السورس")
         else:
-            jnl = ("تم حظر المستخدم :"
-                   "[{}](tg://user?id={}"
-                   "**الاسم: ** {}**\n"
-                   "**الايدي :**  `{}`\n"
+            jnl = ("**تم حظر المستخدم :**"
+                   "[{}](tg://user?id={})\n"
+                   "**الاسم:  {}**\n"
+                   "**الايدي :  {}**\n"
                    ).format(firstname, idd, firstname, idd)
             if usname is None:
                 jnl += "**المعرف : ** لايمتلك معرف\n"
             elif usname != "None":
-                jnl += "**المعرف : @{}**\n".format(usname)
+                jnl += "المعرف : @{}\n".format(usname)
             if len(gbunVar) > 0:
                 gbunm = "{}".format(gbunVar)
                 gbunr = "-"
