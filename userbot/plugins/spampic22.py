@@ -9,8 +9,8 @@ from asyncio import wait, sleep
 from userbot import iqthon
 
 
-@iqthon.on(admin_cmd(pattern="تكرار صور (?: |$)(.*)"))
-async def tiny_pic_spam(e):
+@iqthon.on(admin_cmd(pattern="سبام صور (?: |$)(.*)"))
+async def spamfoto(e):
     arr = extract_args_arr(e)
     if len(arr) < 2 or not arr[0].isdigit():
         await e.edit("هناك خطا")
