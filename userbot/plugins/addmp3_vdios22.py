@@ -14,7 +14,7 @@ async def iq(event):
     d = os.path.join("SQL/extras", "iq.mp3")
     await event.edit("**جارٍ التنزيل ... الملفات الكبيرة تستغرق وقتًا ..**")
     await event.client.download_media(ureply, d)
-    await event.edit("**تم .. الآن قم بالرد على الفيديو الذي تريد إضافة هذا الصوت فيه بالأمر :** `.اضف الصوت`")
+    await event.edit("**تم .. الآن قم بالرد على الفيديو او المتحركه الذي تريد إضافة هذا الصوت فيه بالأمر :** `.اضف الصوت`")
 
 @iqthon.on(admin_cmd(pattern="اضف الصوت(?: |$)(.*)"))
 async def iq(event):
@@ -22,7 +22,7 @@ async def iq(event):
     if not (ureply and ("video" in ureply.document.mime_type)):
         await event.edit("**قم بالرد على متحركه او فيديو الذي تريد إضافة الصوت فيه.**")
         return
-    xx = await event.edit("**جاي اضافه الصوت**")
+    xx = await event.edit("**  جاري اضافه الصوت انتضر قليلا \n ملاحضه لاتنسى تطابق وقت الفيديو او المتحركه مع وقت الصوت **")
     ultt = await ureply.download_media()
     ls = os.listdir("SQL/extras")
     z = "iq.mp3"
