@@ -41,11 +41,10 @@ DEFAULTUSER = AUTONAME or Config.ALIVE_NAME
 LOGS = logging.getLogger(__name__)
 
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
-
+name1 = first_name
 autopic_path = os.path.join(os.getcwd(), "userbot", "original_pic.png")
 digitalpic_path = os.path.join(os.getcwd(), "userbot", "digital_pic.png")
 autophoto_path = os.path.join(os.getcwd(), "userbot", "photo_pfp.png")
-
 EMOJI_TELETHON = gvarstatus("ALIVE_EMOJI") or "•"
 
 digitalpfp = Config.DIGITAL_PIC or "https://telegra.ph/file/6b5db91f38e919e386168.jpg"
@@ -219,7 +218,7 @@ async def autoname_loop():
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
         go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
-        name = f"{EMOJI_TELETHON} {go} - "
+        name = f"{EMOJI_TELETHON} {go} {name1} "
         LOGS.info(name)
         try:
             await iqthon(functions.account.UpdateProfileRequest(first_name=name))
