@@ -13,7 +13,7 @@ DEFAULTUSER = "{mention}"
 # ============================================
 
 
-@iqthon.on(admin_cmd(pattern="بان وهمي (?: |$)(.*)"))
+@iqthon.on(admin_cmd(pattern="بان وهمي(?: |$)(.*)"))
 async def banohme(event):
     if event.fwd_from:
         return
@@ -64,7 +64,7 @@ async def banohme(event):
 
 
 
-@iqthon.on(admin_cmd(pattern="صنع هويه (?: |$)(.*)"))
+@iqthon.on(admin_cmd(pattern="صنع هويه(?: |$)(.*)"))
 async def hoah(event):
     replied_user = await event.get_reply_message()
     await event.client.download_profile_photo(
