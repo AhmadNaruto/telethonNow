@@ -52,7 +52,7 @@ async def last_fm(lastFM):
     """ لأمر .lastfm ، قم بإحضار بيانات scrobble من last.fm."""
     await lastFM.edit("`يعالج...`")
     preview = None
-    playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
+    playing = User(LASTFM_USERNAME).get_now_playing()
     username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
     if playing is not None:
         try:
@@ -73,8 +73,8 @@ async def last_fm(lastFM):
             output = (f"[{LASTFM_USERNAME}]({username}) __is now listening to:"
                       f"__\n\n• [{playing}]({rectrack})\n`{tags}`")
     else:
-        recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
-        playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
+        recent = User(LASTFM_USERNAME).get_recent_tracks(limit=3)
+        playing = User(LASTFM_USERNAME).get_now_playing()
         output = f"[{LASTFM_USERNAME}]({username}) __was last listening to:__\n\n"
         for i, track in enumerate(recent):
             print(i)
@@ -129,7 +129,7 @@ async def get_curr_track(lfmbio):
                 USER_ID = (await lfmbio.client.get_me()).id
             user_info = await bot(GetFullUserRequest(USER_ID))
             RUNNING = True
-            playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
+            playing = User(LASTFM_USERNAME).get_now_playing()
             SONG = playing.get_title()
             ARTIST = playing.get_artist()
             oldsong = environ.get("oldsong", None)
