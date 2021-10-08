@@ -159,7 +159,7 @@ async def typewriter(typew):
     await typew.edit("`🏃    🦖`")
     await typew.edit("`🧎🦖`")
 
-@iqthon.on(admin_cmd(pattern="اركض(?: |$)(.*)"))    
+@iqthon.on(admin_cmd(pattern="روميو(?: |$)(.*)"))    
 async def iq(event):
     if event.fwd_from:
         return
