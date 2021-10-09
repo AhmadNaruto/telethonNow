@@ -7,18 +7,18 @@ from . import *
 @iqthon.on(admin_cmd(pattern="autopost ?(.*)"))
 async def _(event):
     if (event.is_private or event.is_group):
-        return await eod(event, "AutoPost Can Only Be Used For Channels.")
+        return await edit_or_reply(event, "AutoPost Can Only Be Used For Channels.")
     hel_ = event.pattern_match.group(1)
     if str(hel_).startswith("-100"):
-        kk = str(hel_).replace("-100", "")
+        iq = str(hel_).replace("-100", "")
     else:
-        kk = hel_
-    if not kk.isdigit():
-        return await eod(event, "**Please Give Channel ID !!**")
-    if is_post(kk , event.chat_id):
-        return await eor(event, "This Channel Is Already In AutoPost Database.")
-    add_post(kk, event.chat_id)
-    await eor(event, f"**📍 Started AutoPosting from** `{hel_}`")
+        iq = hel_
+    if not iq.isdigit():
+        return await edit_or_reply(event, "**Please Give Channel ID !!**")
+    if is_post(iq , event.chat_id):
+        return await edit_or_reply(event, "This Channel Is Already In AutoPost Database.")
+    add_post(iq, event.chat_id)
+    await edit_or_reply(event, f"**📍 Started AutoPosting from** `{hel_}`")
 
 
 @iqthon.on(admin_cmd(pattern="rmautopost ?(.*)"))
@@ -27,14 +27,14 @@ async def _(event):
         return await eod(event, "AutoPost Can Only Be Used For Channels.")
     hel_ = event.pattern_match.group(1)
     if str(hel_).startswith("-100"):
-        kk = str(hel_).replace("-100", "")
+        iq = str(hel_).replace("-100", "")
     else:
-        kk = hel_
-    if not kk.isdigit():
+        iq = hel_
+    if not iq.isdigit():
         return await eod(event, "**Please Give Channel ID !!**")
-    if not is_post(kk, event.chat_id):
+    if not is_post(iq, event.chat_id):
         return await eod(event, "I don't think this channel is in AutoPost Database.")
-    remove_post(kk, event.chat_id)
+    remove_post(iq, event.chat_id)
     await eor(event, f"**📍 Stopped AutoPosting From** `{hel_}`")
 
 @iqthon.on(events.NewMessage())
