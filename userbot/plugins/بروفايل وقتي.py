@@ -63,15 +63,7 @@ COLLECTION_STRINGS = {
     ],
 }
 
-def inline_mention(user):
-    full_name = user_full_name(user) or "No Name"
-    return f"{full_name}"
 
-
-def user_full_name(user):
-    names = [user.first_name]
-    names = [i for i in list(names) if i]
-    return " ".join(names)
 
 async def autopicloop():
     AUTOPICSTART = gvarstatus("صوره وقتيه") == "true"
@@ -224,8 +216,9 @@ async def autoname_loop():
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
         go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
-        name1 = inline_mention
-        name = f"{EMOJI_TELETHON} {go} {name1} "
+        first_name = replied_user.user.first_name
+        first_name = (first_name.replace("\u2060", "") if first_name else ("`هذا المستخدم ليس له اسم`"))
+        name = f"{EMOJI_TELETHON} {go} {first_name} "
         LOGS.info(name)
         try:
             await iqthon(functions.account.UpdateProfileRequest(first_name=name))
