@@ -102,7 +102,7 @@ async def mute_chat(mute_e):
 async def keep_read(message):
     """The mute logic."""
     try:
-        from userbot.modules.sql_helper.keep_read_sql import is_kread
+        from userbot.sql_helper.keep_read_sql import is_kread
     except AttributeError:
         return
     kread = is_kread()
