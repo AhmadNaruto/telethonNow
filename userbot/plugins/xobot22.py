@@ -285,7 +285,3 @@ async def _(event):
             await geez.edit("**قم بفتح الحظر عن : @TempMailBot للأستمرار بانشاء البريدات**")
             return
         await event.edit(f"بريدك الخاص هوه : ~ `{response.message.message}`\n[انقر هنا للتحقق من رسائل بريدك]({iqthonbot})"
-          else:
-            await event.delete()
-            await bot.forward_messages(event.chat_id, response.message)
-    await bot.delete_messages(conv.chat_id, [conv.id, response.id, iqthonbot.id])
