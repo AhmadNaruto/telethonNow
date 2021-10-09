@@ -56,16 +56,7 @@ def get_video_thumb(file, output=None, width=320):
         return output
 
 
-async def upload_file(
-    client: TelegramClient,
-    file: BinaryIO,
-    name: str,
-    progress_callback: callable = None,
-) -> TypeInputFile:
-    global filename
-    filename = name
-    res = (await _internal_transfer_to_telegram(client, file, progress_callback))[0]
-    return res
+
 
 
 
