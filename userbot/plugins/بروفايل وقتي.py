@@ -216,9 +216,8 @@ async def autoname_loop():
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
         go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
-        first_name = replied_user.user.first_name
-        first_name = (first_name.replace("\u2060", "") if first_name else ("`هذا المستخدم ليس له اسم`"))
-        name = f"{EMOJI_TELETHON} {go} {first_name} "
+        ll5 = user.first_name.replace("\u2060", "") if user.first_name else (" ")
+        name = f"{EMOJI_TELETHON} {go} {ll5} "
         LOGS.info(name)
         try:
             await iqthon(functions.account.UpdateProfileRequest(first_name=name))
