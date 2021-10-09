@@ -37,7 +37,7 @@ async def _(event):
     remove_post(iq, event.chat_id)
     await eor(event, f"**📍 Stopped AutoPosting From** `{hel_}`")
 
-@iqthon.on(admin_cmd(pattern=None())
+@iqthon.on(admin_cmd.NewMessage())
 async def _(event):
     if event.is_private:
         return
