@@ -27,7 +27,7 @@ GROUPS_OWNERSTR = "**⌔︙قائمة المجموعات التي تمتلك ف�
 
 
 def inline_mention(user):
-    full_name = user_first_name(user) or "No Name"
+    full_name = user_full_name(user) or "No Name"
     return f"{full_name}"
 
 
