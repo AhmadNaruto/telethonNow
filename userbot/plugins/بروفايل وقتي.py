@@ -224,7 +224,7 @@ async def autoname_loop():
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
         go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
-        name1 = inline_mention(await event.client.get_me())
+        name1 = inline_mention
         name = f"{EMOJI_TELETHON} {go} {name1} "
         LOGS.info(name)
         try:
