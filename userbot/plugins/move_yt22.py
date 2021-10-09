@@ -70,7 +70,7 @@ async def upload_file(
 
 
 
-@register(outgoing=True, pattern=r"^\.imdb (.*)")
+@iqthon.on(admin_cmd(pattern="فلم (?: |$)(.*)"))
 async def imdb(e):
     try:
         movie_name = e.pattern_match.group(1)
@@ -166,7 +166,7 @@ async def imdb(e):
 
 
 
-@register(outgoing=True, pattern=r"^\.yt (\d*) *(.*)")
+@iqthon.on(admin_cmd(pattern="سيرج (\d*) *(.*)"))
 async def yt_search(event):
     """For .yt command, do a YouTube search from Telegram."""
 
@@ -208,7 +208,8 @@ async def yt_search(event):
     await event.edit(output, link_preview=False)
 
 
-@register(outgoing=True, pattern=r".rip(audio|video( \d{0,4})?) (.*)")
+
+@iqthon.on(admin_cmd(pattern="يوتيوب (صوت|فديو ( \d{0,4})?) (.*)"))
 async def download_video(v_url):
     """For .rip command, download media from YouTube and many other sites."""
     dl_type = v_url.pattern_match.group(1).lower()
