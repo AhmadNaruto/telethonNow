@@ -63,6 +63,15 @@ COLLECTION_STRINGS = {
     ],
 }
 
+def inline_mention(user):
+    full_name = user_full_name(user) or "No Name"
+    return f"{full_name}"
+
+
+def user_full_name(user):
+    names = [user.first_name]
+    names = [i for i in list(names) if i]
+    return " ".join(names)
 
 async def autopicloop():
     AUTOPICSTART = gvarstatus("صوره وقتيه") == "true"
@@ -210,17 +219,16 @@ async def bloom_pfploop():
             return
         BLOOMSTART = gvarstatus("تجديد الصوره الملونه") == "true"
 
-
 async def autoname_loop():
     AUTONAMESTART = gvarstatus("اسم وقتي") == "true"
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
         go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
+        name1 = inline_mention(await event.client.get_me())
         name = f"{EMOJI_TELETHON} {go} {name1} "
         LOGS.info(name)
         try:
             await iqthon(functions.account.UpdateProfileRequest(first_name=name))
-            await iqthon(functions.account.UpdateProfileRequest(first_name=name1))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await asyncio.sleep(ex.seconds)
