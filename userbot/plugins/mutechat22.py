@@ -98,7 +98,7 @@ async def mute_chat(mute_e):
         )
 
 
-@iqthon.on(incoming=True, disable_errors=True)
+@iqthon.iq_cmd(incoming=True, disable_errors=True)
 async def keep_read(message):
     """The mute logic."""
     try:
