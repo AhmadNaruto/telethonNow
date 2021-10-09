@@ -13,7 +13,6 @@ from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipant
 from telethon.tl.functions.messages import GetFullChatRequest, GetHistoryRequest
 from telethon.tl.types import ChannelParticipantsAdmins, MessageActionChannelMigrateFrom
 from userbot import iqthon
-from userbot import BOTLOG, BOTLOG_CHATID
 
 
 
@@ -45,71 +44,6 @@ async def chatidgetter(chat):
 
 
 
-
-@iqthon.on(admin_cmd(pattern="log(?: |$)(.*)"))
-async def log(log_text):
-    """For .log command, forwards a message or the command argument to the bot logs group"""
-    if BOTLOG:
-        if log_text.reply_to_msg_id:
-            reply_msg = await log_text.get_reply_message()
-            await reply_msg.forward_to(BOTLOG_CHATID)
-        elif log_text.pattern_match.group(1):
-            user = f"#LOG / Chat ID: {log_text.chat_id}\n\n"
-            textx = user + log_text.pattern_match.group(1)
-            await bot.send_message(BOTLOG_CHATID, textx)
-        else:
-            return await log_text.edit("`What am I supposed to log?`")
-        await log_text.edit("`Logged Successfully`")
-    else:
-        await log_text.edit("`This feature requires Logging to be enabled!`")
-    await sleep(2)
-    await log_text.delete()
-
-
-
-@iqthon.on(admin_cmd(pattern="unmutechat(?: |$)(.*)"))
-async def unmute_chat(unm_e):
-    """For .unmutechat command, unmute a muted chat."""
-    try:
-        from userbot.sql_helper.no_log_pms_sql import unkread
-    except AttributeError:
-        return await unm_e.edit("`Running on Non-SQL Mode!`")
-    unkread(str(unm_e.chat_id))
-    await unm_e.edit("```Unmuted this chat Successfully```")
-    await sleep(2)
-    await unm_e.delete()
-
-
-@iqthon.on(admin_cmd(pattern="mutechat(?: |$)(.*)"))
-async def mute_chat(mute_e):
-    """For .mutechat command, mute any chat."""
-    try:
-        from userbot.sql_helper.no_log_pms_sql import kread
-    except AttributeError:
-        return await mute_e.edit("`Running on Non-SQL mode!`")
-    await mute_e.edit(str(mute_e.chat_id))
-    kread(str(mute_e.chat_id))
-    await mute_e.edit("`Shush! This chat will be silenced!`")
-    await sleep(2)
-    await mute_e.delete()
-    if BOTLOG:
-        await mute_e.client.send_message(
-            BOTLOG_CHATID, str(mute_e.chat_id) + " was silenced."
-        )
-
-
-@iqthon.iq_cmd(incoming=True, disable_errors=True)
-async def keep_read(message):
-    """The mute logic."""
-    try:
-        from userbot.sql_helper.no_log_pms_sql import is_kread
-    except AttributeError:
-        return
-    kread = is_kread()
-    if kread:
-        for i in kread:
-            if i.groupid == str(message.chat_id):
-                await message.client.send_read_acknowledge(message.chat_id)
 
 
 regexNinja = False
