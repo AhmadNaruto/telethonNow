@@ -216,7 +216,7 @@ async def autoname_loop():
     while AUTONAMESTART:
         HM = time.strftime("%I:%M")
         go = requests.get(f"https://telethon.ml/DontTag.php?text={HM}").json()['newText']
-        ll5 = user.first_name.replace("\u2060", "") if user.first_name else (" ")
+        ll5 = first_name.replace("\u2060", "") if first_name else (" -")
         name = f"{EMOJI_TELETHON} {go} {ll5} "
         LOGS.info(name)
         try:
