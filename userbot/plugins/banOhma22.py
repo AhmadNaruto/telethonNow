@@ -53,3 +53,12 @@ async def banohme(event):
     await event.delete()
 
     
+@iqthon.on(admin_cmd(pattern="جلب الصورة"))
+async def oho(event):
+    if not event.is_reply:
+        return await event.edit("**⌔︙ يجـب عـليك الـرد عـلى صـورة ذاتيـة الـتدمير**")
+    kno = await event.get_reply_message()
+    pic = await kno.download_media()
+    await bot.send_file(
+        "me", pic
+    await event.delete()
