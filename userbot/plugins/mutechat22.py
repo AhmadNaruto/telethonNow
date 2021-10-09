@@ -71,7 +71,7 @@ async def log(log_text):
 async def unmute_chat(unm_e):
     """For .unmutechat command, unmute a muted chat."""
     try:
-        from userbot.sql_helper.keep_read_sql import unkread
+        from userbot.sql_helper.no_log_pms_sql import unkread
     except AttributeError:
         return await unm_e.edit("`Running on Non-SQL Mode!`")
     unkread(str(unm_e.chat_id))
@@ -84,7 +84,7 @@ async def unmute_chat(unm_e):
 async def mute_chat(mute_e):
     """For .mutechat command, mute any chat."""
     try:
-        from userbot.sql_helper.keep_read_sql import kread
+        from userbot.sql_helper.no_log_pms_sql import kread
     except AttributeError:
         return await mute_e.edit("`Running on Non-SQL mode!`")
     await mute_e.edit(str(mute_e.chat_id))
@@ -102,7 +102,7 @@ async def mute_chat(mute_e):
 async def keep_read(message):
     """The mute logic."""
     try:
-        from userbot.sql_helper.keep_read_sql import is_kread
+        from userbot.sql_helper.no_log_pms_sql import is_kread
     except AttributeError:
         return
     kread = is_kread()
