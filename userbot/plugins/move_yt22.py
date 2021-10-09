@@ -29,7 +29,6 @@ from youtube_dl.utils import (
 )
 from youtube_search import YoutubeSearch
 from userbot import iqthon
-from userbot.utils.FastTelethon import upload_file
 
 
 
@@ -57,18 +56,16 @@ def get_video_thumb(file, output=None, width=320):
         return output
 
 
-def sortthings(contents, path):
-    catsort = []
-    contents.sort()
-    for file in contents:
-        catpath = os.path.join(path, file)
-        if os.path.isfile(catpath):
-            catsort.append(file)
-    for file in contents:
-        catpath = os.path.join(path, file)
-        if os.path.isdir(catpath):
-            catsort.append(file)
-    return catsort
+async def upload_file(
+    client: TelegramClient,
+    file: BinaryIO,
+    name: str,
+    progress_callback: callable = None,
+) -> TypeInputFile:
+    global filename
+    filename = name
+    res = (await _internal_transfer_to_telegram(client, file, progress_callback))[0]
+    return res
 
 
 
