@@ -4,12 +4,11 @@ from telethon.tl import functions
 from telethon.tl.functions.account import UpdateUsernameRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-full = await client(GetFullUserRequest(first_name))
 
 from userbot import iqthon
 
-OFFLINE_TAG = f"#OFFLINE {full}"
-ONLINE_TAG = f"#ONLINE {full}"
+OFFLINE_TAG = f"#OFFLINE "
+ONLINE_TAG = f"#ONLINE "
 
 
 @iqthon.on(admin_cmd(pattern="مشغول(?: |$)(.*)"))
