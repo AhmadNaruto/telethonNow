@@ -29,12 +29,46 @@ from youtube_dl.utils import (
 )
 from youtube_search import YoutubeSearch
 from userbot import iqthon
-from userbot.modules.upload_download import get_video_thumb
 from userbot.utils.FastTelethon import upload_file
 
 
 
+def get_video_thumb(file, output=None, width=320):
+    output = file + ".jpg"
+    metadata = extractMetadata(createParser(file))
+    cmd = [
+        "ffmpeg",
+        "-i",
+        file,
+        "-ss",
+        str(int((0, metadata.get("duration").seconds)[metadata.has("duration")] / 2)),
+        # '-filter:v', 'scale={}:-1'.format(width),
+        "-vframes",
+        "1",
+        output,
+    ]
+    p = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+    )
+    p.communicate()
+    if not p.returncode and os.path.lexists(file):
+        return output
 
+
+def sortthings(contents, path):
+    catsort = []
+    contents.sort()
+    for file in contents:
+        catpath = os.path.join(path, file)
+        if os.path.isfile(catpath):
+            catsort.append(file)
+    for file in contents:
+        catpath = os.path.join(path, file)
+        if os.path.isdir(catpath):
+            catsort.append(file)
+    return catsort
 
 
 
