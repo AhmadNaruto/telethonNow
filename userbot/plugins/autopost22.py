@@ -1,6 +1,7 @@
 from telethon import events
 from userbot import iqthon
 from ..sql_helper.autopost_sql import add_post, get_all_post, is_post, remove_post
+from ..core.events import NewMessage
 from . import *
 
 
@@ -37,7 +38,7 @@ async def _(event):
     remove_post(iq, event.chat_id)
     await eor(event, f"**📍 Stopped AutoPosting From** `{hel_}`")
 
-@iqthon.on(admin_cmd.NewMessage())
+@iqthon.on(events.NewMessage())
 async def _(event):
     if event.is_private:
         return
