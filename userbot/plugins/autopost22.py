@@ -26,18 +26,18 @@ async def _(event):
 @iqthon.on(admin_cmd(pattern="rmautopost ?(.*)"))
 async def _(event):
     if (event.is_private or event.is_group):
-        return await eod(event, "AutoPost Can Only Be Used For Channels.")
+        return await edit_or_reply(event, "AutoPost Can Only Be Used For Channels.")
     hel_ = event.pattern_match.group(1)
     if str(hel_).startswith("-100"):
         iq = str(hel_).replace("-100", "")
     else:
         iq = hel_
     if not iq.isdigit():
-        return await eod(event, "**Please Give Channel ID !!**")
+        return await edit_or_reply(event, "**Please Give Channel ID !!**")
     if not is_post(iq, event.chat_id):
-        return await eod(event, "I don't think this channel is in AutoPost Database.")
+        return await edit_or_reply(event, "I don't think this channel is in AutoPost Database.")
     remove_post(iq, event.chat_id)
-    await eor(event, f"**📍 Stopped AutoPosting From** `{hel_}`")
+    await edit_or_reply(event, f"**📍 Stopped AutoPosting From** `{hel_}`")
 
 @iqthon.iq_cmd(incoming=True)
 async def _(event):
