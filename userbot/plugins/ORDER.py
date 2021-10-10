@@ -26,21 +26,42 @@ async def order(event):
     list1 = "test 1"
     list2 = "test2"
     list3 = "test3"
-    buttons_IQ = [
-                [Button.inline("list 1", data=list1"),
+    alive_buttons = [
+                [
+                    Button.inline(
+                        "TEXT", data=list1"
+                    ),
                 ],
                 [
-                Button.inline("list 2", data=list2"),
+                    Button.inline(
+                        text=f" التيليثون "
+                    ),
                 ],
                 [
-                Button.inline("list 3", data=list3"),
+                    Button.inline(
+                        text=f" الوقت"
+                    ),
                 ],
-                [
-                Button.url("link lists", "test"),
+                [   
+                    Button.url("رابط السورس", "https://github.com/klanrali/Telethon-Arab"
+                    ),
                 ],
-                ]  
-                await event.answer([builder.article(text=the_description(url=IMG_list, size=42, mime_type="image/jpeg",attributes=[])
-                if CAT_IMG else None,buttons=buttons_IQ,parse_mode="md"),])
+                [   
+                    Button.inline(
+                        text=f" المالك "
+                    ),
+                ],
+            ]
+            await event.answer([
+                builder.article(
+                    title="Ialive", 
+                    description="list MSG", 
+                    text=the_description, 
+                    thumb=InputWebDocument(url=IMG_list, size=42, mime_type="image/jpeg", attributes=[]) if IMG_list else None, 
+                    buttons=alive_buttons, 
+                    parse_mode="md"
+                ),
+            ])
                  
                     
                 
