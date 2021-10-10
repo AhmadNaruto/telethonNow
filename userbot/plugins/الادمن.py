@@ -1,5 +1,4 @@
 from asyncio import sleep
-
 from telethon import functions
 from telethon.errors import (
     BadRequestError,
@@ -11,6 +10,13 @@ from telethon.tl.functions.channels import (
     EditAdminRequest,
     EditBannedRequest,
     EditPhotoRequest,
+)
+from telethon.tl.functions.messages import GetFullChatRequest
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.errors import (
+    ChannelInvalidError,
+    ChannelPrivateError,
+    ChannelPublicGroupNaError,
 )
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import (
@@ -29,13 +35,13 @@ from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 from . import BOTLOG, BOTLOG_CHATID
 
-# =================== STRINGS ============
 PP_TOO_SMOL = "**⌔︙الصورة صغيرة جدًا  📸** ."
 PP_ERROR = "**⌔︙فشل أثناء معالجة الصورة  📵** ."
 NO_ADMIN = "**⌔︙أنا لست مشرف هنا ** ."
 NO_PERM = "**⌔︙ليس لدي أذونات كافية  🚮** ."
 CHAT_PP_CHANGED = "**⌔︙تغيّرت صورة الدردشة  🌅** ."
-INVALID_MEDIA = "**⌔︙ملحق غير صالح  📳** ."
+INVALID_MEDIA = "**⌔ ︙ ملحق غير صالح  📳** ."
+IMOGE_IQTHON = "⌔︙"
 
 BANNED_RIGHTS = ChatBannedRights(
     until_date=None,
@@ -68,24 +74,7 @@ plugin_category = "admin"
 # ================================================
 
 
-@iqthon.iq_cmd(
-    pattern="حذف( صورة| -d)$",
-    command=("صورة", plugin_category),
-    info={
-        "header": "لوضع صوره للمجموعه ",
-        "description": "قم بالرد على الصوره المراد وضعها",
-        "flags": {
-            "ضع صوره": "لوضع صوره للمجموعة ",
-            "-d": "To delete group pic",
-        },
-        "usage": [
-            "{tr}ضع صوره <بالرد على الصوره>",
-            "{tr}gpic -d",
-        ],
-    },
-    groups_only=True,
-    require_admin=True,
-)
+@iqthon.on(admin_cmd(pattern="حذف( صورة| -d)$"))
 async def set_group_photo(event):  # sourcery no-metrics
     "⌔︙لتغيير المجموعة  ♌️"
     flag = (event.pattern_match.group(1)).strip()
@@ -129,22 +118,65 @@ async def set_group_photo(event):  # sourcery no-metrics
             f"⌔︙ المحادثة  📜 : {event.chat.title}(`{event.chat_id}`)",
         )
 
+async def get_chatinfo(event):
+    chat = event.pattern_match.group(1)
+    chat_info = None
+    if chat:
+        try:
+            chat = int(chat)
+        except ValueError:
+            pass
+    if not chat:
+        if event.reply_to_msg_id:
+            replied_msg = await event.get_reply_message()
+            if replied_msg.fwd_from and replied_msg.fwd_from.channel_id is not None:
+                chat = replied_msg.fwd_from.channel_id
+        else:
+            chat = event.chat_id
+    try:
+        chat_info = await event.client(GetFullChatRequest(chat))
+    except:
+        try:
+            chat_info = await event.client(GetFullChannelRequest(chat))
+        except ChannelInvalidError:
+            await event.reply("**⌔︙ لم يتم العثور على المجموعة او القناة**")
+            return None
+        except ChannelPrivateError:
+            await event.reply(
+                "**⌔︙ لا يمكنني استخدام الامر من الكروبات او القنوات الخاصة**"
+            )
+            return None
+        except ChannelPublicGroupNaError:
+            await event.reply("**⌔︙ لم يتم العثور على المجموعة او القناة**")
+            return None
+        except (TypeError, ValueError):
+            await event.reply("**⌔︙ رابط الكروب غير صحيح**")
+            return None
+    return chat_info
 
-@iqthon.iq_cmd(
-    pattern="رفع مشرف(?: |$)(.*)",
-    command=("رفع مشرف", plugin_category),
-    info={
-        "الامر": "لرفع الشخص مشرف مع صلاحيات",
-        "الشرح": "لرفع الشخص مشرف بالمجموعه قم بالرد على الشخص\
-            \nNote : You need proper rights for this",
-        "الاستخدام": [
-            "{tr}رفع مشرف <ايدي/معرف/بالرد عليه>",
-            "{tr}رفع مشرف <ايدي/معرف/بالرد عليه> ",
-        ],
-    },
-    groups_only=True,
-    require_admin=True,
-)
+
+def make_mention(user):
+    if user.username:
+        return f"@{user.username}"
+    else:
+        return inline_mention(user)
+
+
+def inline_mention(user):
+    full_name = user_full_name(user) or "No Name"
+    return f"[{full_name}](tg://user?id={user.id})"
+
+
+def user_full_name(user):
+    names = [user.first_name, user.last_name]
+    names = [i for i in list(names) if i]
+    full_name = " ".join(names)
+    return full_name
+
+
+
+
+@iqthon.on(admin_cmd(pattern="رفع مشرف(?: |$)(.*)"))
 async def promote(event):
     "لرفع مشرف بالمجموعه"
     new_rights = ChatAdminRights(
@@ -175,21 +207,7 @@ async def promote(event):
         )
 
 
-@iqthon.iq_cmd(
-    pattern="تك(?: |$)(.*)",
-    command=("تك", plugin_category),
-    info={
-        "الامر": "لتنزيل الشخص كن الاشراف",
-        "الشرح": "يقوم هذا الامر بحذف جميع صلاحيات المشرف\
-            \nملاحظه :**لازم تكون انت الشخص الي رفعه او تكون مالك المجموعه حتى تنزله**",
-        "الاستخدام": [
-            "{tr}تك <الايدي/المعرف/بالرد عليه>",
-            "{tr}تك <الايدي/المعرف/بالرد عليه>",
-        ],
-    },
-    groups_only=True,
-    require_admin=True,
-)
+@iqthon.on(admin_cmd(pattern="تنزيل مشرف(?: |$)(.*)"))
 async def demote(event):
     "لتنزيل من رتبة الادمن"
     user, _ = await get_user_from_event(event)
@@ -204,7 +222,7 @@ async def demote(event):
         delete_messages=None,
         pin_messages=None,
     )
-    rank = "admin"
+    rank = "مشرف"
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, newrights, rank))
     except BadRequestError:
@@ -220,29 +238,13 @@ async def demote(event):
 
 
 
-@iqthon.iq_cmd(
-    pattern="طرد(?: |$)(.*)",
-    command=("طرد", plugin_category),
-    info={
-        "header": "⌔︙ لطرد شخص من المجموعة ",
-        "description": "Will kick the user from the group so he can join back.\
-        \nNote : You need proper rights for this.",
-        "usage": [
-            "{tr}kick <userid/username/reply>",
-            "{tr}kick <userid/username/reply> <reason>",
-        ],
-    },
-    groups_only=True,
-    require_admin=True,
-)
+@iqthon.on(admin_cmd(pattern="طرد(?: |$)(.*)"))
 async def endmute(event):
     "⌔︙إستخدم هذا لطرد مستخدم من المحادثة  🚷"
     user, reason = await get_user_from_event(event)
     if not user:
         return
     if user.id == 1226408155:
-        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
-    if user.id == 1094825801:
         return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
     catevent = await edit_or_reply(event, "**⌔︙ تـم حـظره بـنجاح ✅**")
     try:
@@ -264,20 +266,7 @@ async def endmute(event):
         )
 
 
-@iqthon.iq_cmd(
-    pattern="تثبيت( بالاشعار|$)",
-    command=("pin", plugin_category),
-    info={
-        "header": "For pining messages in chat",
-        "description": "reply to a message to pin it in that in chat\
-        \nNote : You need proper rights for this if you want to use in group.",
-        "options": {"loud": "To notify everyone without this.it will pin silently"},
-        "usage": [
-            "{tr}pin <reply>",
-            "{tr}pin loud <reply>",
-        ],
-    },
-)
+@iqthon.on(admin_cmd(pattern="تثبيت(?: |$)(.*)"))
 async def pin(event):
     "⌔︙ تثبيت  📌"
     to_pin = event.reply_to_msg_id
@@ -302,20 +291,7 @@ async def pin(event):
         )
 
 
-@iqthon.iq_cmd(
-    pattern="الغاء التثبيت( للكل|$)",
-    command=("الغاء التثبيت", plugin_category),
-    info={
-        "header": "For unpining messages in chat",
-        "description": "reply to a message to unpin it in that in chat\
-        \nNote : You need proper rights for this if you want to use in group.",
-        "options": {"all": "To unpin all messages in the chat"},
-        "usage": [
-            "{tr}unpin <reply>",
-            "{tr}unpin all",
-        ],
-    },
-)
+@iqthon.on(admin_cmd(pattern="الغاء التثبيت(?: |$)(.*)"))
 async def pin(event):
     "⌔︙لإلغاء تثبيت رسائل من المجموعة  ⚠️"
     to_unpin = event.reply_to_msg_id
@@ -349,27 +325,7 @@ async def pin(event):
         )
 
 
-@iqthon.iq_cmd(
-    pattern="الاحداث( -ر)?(?: |$)(\d*)?",
-    command=("الاحداث", plugin_category),
-    info={
-        "header": "To get recent deleted messages in group",
-        "description": "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages.",
-        "flags": {
-            "u": "use this flag to upload media to chat else will just show as media."
-        },
-        "usage": [
-            "{tr}undlt <count>",
-            "{tr}undlt -u <count>",
-        ],
-        "examples": [
-            "{tr}undlt 7",
-            "{tr}undlt -u 7 (this will reply all 7 messages to this message",
-        ],
-    },
-    groups_only=True,
-    require_admin=True,
-)
+@iqthon.on(admin_cmd(pattern="جلب الاحداث(?: |$)(.*)"))
 async def _iundlt(event):  # sourcery no-metrics
     "⌔︙لأخذ نظرة عن آخر الرسائل المحذوفة في المجموعة  💠"
     catevent = await edit_or_reply(event, "**⌔︙يتم البحث عن اخر الاحداث انتظر  🔍**")
@@ -413,29 +369,15 @@ async def _iundlt(event):  # sourcery no-metrics
                     f"⌔︙ {msg.old.message}\n**تم ارسالها بـواسطة  🛃** {_format.mentionuser(ruser.first_name ,ruser.id)}",
                     file=msg.old.media,
                 )
-@iqthon.iq_cmd(
-    pattern="حظر(?:\s|$)([\s\S]*)",
-    command=("حظر", plugin_category),
-    info={
-        "⌔︙ الاستخدام": "يقـوم بـحظر شخـص في الـكروب الءي اسـتخدمت فيـه الامر.",
-        "⌔︙ الشرح": "لحـظر شخـص من الكـروب ومـنعه من الأنـضمام مجـددا\
-            \n⌔︙ تـحتاج الصلاحـيات لـهذا الأمـر.",
-        "⌔︙ الامر": [
-            "{tr}حظر <الايدي/المعرف/بالرد عليه>",
-            "{tr}حظر <الايدي/المعرف/بالرد عليه> <السبب>",
-        ],
-    },
-    groups_only=True,
-    require_admin=True,
-) #admin plugin for  iqthon
+
+
+@iqthon.on(admin_cmd(pattern="حظر(?: |$)(.*)"))
 async def _ban_person(event):
     "⌔︙ لحـظر شخص في كـروب مـعين"
     user, reason = await get_user_from_event(event)
     if not user:
         return
     if user.id == 1226408155:
-        return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
-    if user.id == 1094825801:
         return await edit_delete(event, "**⌔︙ عـذرا أنـة مبـرمج السـورس  ⚜️**")
     if user.id == event.client.uid:
         return await edit_delete(event, "⌔︙ عـذرا لا تسـتطيع حـظر شـخص")
@@ -480,21 +422,7 @@ async def _ban_person(event):
             )
 
 
-@iqthon.iq_cmd(
-    pattern="الغاء حظر(?:\s|$)([\s\S]*)",
-    command=("الغاء حظر", plugin_category),
-    info={
-        "⌔︙ الأسـتخدام": "يقـوم بـالغاء حـظر الشـخص في الـكروب الذي اسـتخدمت فيـه الامر.",
-        "⌔︙ الشرح": "لألـغاء حـظر شخـص من الكـروب والسـماح له من الأنـضمام مجـددا\
-            \n⌔︙ تـحتاج الصلاحـيات لـهذا الأمـر.",
-        "⌔︙ الأمـر": [
-            "{tr}الغاء حظر <الايدي/المعرف/بالرد عليه>",
-            "{tr}الغاء حظر <الايدي/المعرف/بالرد عليه> <السبب> ",
-        ],
-    },
-    groups_only=True,
-    require_admin=True,
-)
+@iqthon.on(admin_cmd(pattern="الغاء الحظر(?: |$)(.*)"))
 async def nothanos(event):
     "⌔︙ لألـغاء الـحظر لـشخص في كـروب مـعين"
     user, _ = await get_user_from_event(event)
@@ -526,3 +454,34 @@ async def watcher(event):
             await event.delete()
         except Exception as e:
             LOGS.info(str(e))
+
+@iqthon.on(admin_cmd(pattern=r"نقل الاعظاء ?(.*)"))
+async def add(addiqthon):
+    klanr = await addiqthon.get_klanr()
+    l5 = await addiqthon.client.get_l5()
+    if not klanr.id == l5.id:
+        kno = await addiqthon.reply(f"** أنتظر العمليّـة إنتظـر قليلاً  ↯**")
+    else:
+        kno = await addiqthon.edit(f"** أنتظر العمليّـة إنتظـر قليلاً  ↯**")
+    IQTHON = await get_chatinfo(addiqthon)
+    chat = await addiqthon.get_chat()
+    if addiqthon.is_private:
+        return await kno.edit(f"** لا يُمڪـنني إضافـة المُـستخدمين هُـنا  ✕ **\n `1- تأكد من أنك لست محظور من الاضافة  .`\n `2- تاكد ان صلاحيه اضافه الاعضاء مفتوحه .`")
+    s = 0
+    f = 0
+    error = "None"
+    await kno.edit("** أنتظر جمـع معلومـات المُـستخدمين ↯**")
+    async for user in addiqthon.client.iter_participants(IQTHON.full_chat.id):
+        try:
+            if error.startswith("Too"):
+                return (
+                    await kno.edit(f"** لا يُمڪـنني إضافـة المُـستخدمين هُـنا  ✕ :**\n `1- تأكد من أنك لست محظور من الاضافة  .`\n `2- تاكد ان صلاحيه اضافه الاعضاء مفتوحه .` \n `{error}`"),)
+            await addiqthon.client(functions.channels.InviteToChannelRequest(channel=chat, users=[user.id]))
+            s = s + 1
+            await kno.edit(f"** أنتظر عمليّـة الأضافة :**\n**  عدد الأضافات 👤 :** `{s}` \n**  خـطأ الأضافات ❄️ :** `{f}` \n")
+        except Exception as e:
+            error = str(e)
+            f = f + 1
+    return await kno.edit(f"**⌔︙ اڪتـملت الأضافـة ✅** : \n\n⌔︙ تـم بنجـاح اضافـة `{s}` \n⌔︙ خـطأ بأضافـة `{f}`")
+    
+
