@@ -2,7 +2,9 @@ import re
 from re import findall
 from requests import get
 from userbot import iqthon
-
+from bs4 import BeautifulSoup
+from urllib.error import HTTPError
+from urllib.parse import quote_plus
 
 @iqthon.on(admin_cmd(pattern="فلم(?: |$)(.*)"))
 async def imdb(e):
