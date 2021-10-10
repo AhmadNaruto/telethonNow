@@ -20,13 +20,13 @@ from . import mention
 
 @iqthon.on(admin_cmd(pattern="lists(?: |$)(.*)"))
 async def order(event):
-  reply_to_id = await reply_id(event)
-            the_description = "Welcome to my list"
-            IMG_list = gvarstatus("ALIVE_PIC")
-            list1 = "test 1"
-            list2 = "test2"
-            list3 = "test3"
-         alive_buttons = [
+    reply_to_id = await reply_id(event)
+    the_description = "Welcome to my list"
+    IMG_list = gvarstatus("ALIVE_PIC")
+    list1 = "test 1"
+    list2 = "test2"
+    list3 = "test3"
+    buttons_IQ = [
                 [Button.inline("list 1", data=list1"),
                 ],
                 [
@@ -40,7 +40,7 @@ async def order(event):
                 ],
                 ]  
                 await event.answer([builder.article(text=the_description(url=IMG_list, size=42, mime_type="image/jpeg",attributes=[])
-                if CAT_IMG else None,buttons=alive_buttons,parse_mode="md"),])
+                if CAT_IMG else None,buttons=buttons_IQ,parse_mode="md"),])
                  
                     
                 
