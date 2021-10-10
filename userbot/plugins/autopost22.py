@@ -1,6 +1,8 @@
 from telethon import events
 from userbot import iqthon
 from ..sql_helper.autopost_sql import add_post, get_all_post, is_post, remove_post
+from ..core.logger import logging
+from ..core.managers import edit_delete, edit_or_reply
 from . import *
 
 
